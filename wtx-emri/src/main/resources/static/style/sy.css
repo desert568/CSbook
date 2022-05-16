@@ -1,0 +1,108 @@
+.layuiTable .layui-table th{
+    color: #000000;
+    font-size: 14px;
+    background-color: #e3f1ff;
+}
+.layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row]{
+    border-color: #d9e6f7;
+}
+.layuiTable .layui-table .layui-table-cell{
+    height: 24px;
+    line-height: 24px;
+    padding: 0 5px;
+}
+.layuiTable .layui-table td{
+    font-size: 14px;
+}
+
+.layui-card{
+    border:1px solid #d9e6f7;
+}
+.layui-card-header{
+    border-color: #d9e6f7;
+    color: #000000;
+}
+.layui-tab-title{
+    border-bottom: 1px solid #d9e6f7;
+    color: #000000;
+}
+.layui-tab-title .layui-this{
+    background-color: #c3e1ff;
+}
+.layui-tab-title .layui-this:after{
+    border-width:0;
+    border-top:3px solid #3497fd;
+}
+.ul_list{
+    border:1px solid #d9e6f7;
+    border-bottom: none;
+    margin-bottom: 20px;
+}
+.ul_list li{
+    padding:10px 20px 10px 30px;
+    position: relative;
+    border-bottom:1px solid #d9e6f7;
+}
+.ul_list li span{
+    float: right;
+}
+.ul_list li:after{
+    content:"";
+    width:7px;
+    height:7px;
+    display:block;
+    background:url("../images/icon_sm.png") no-repeat;
+    position:absolute;
+    top:19px;
+    left: 14px;
+}
+.more_fr{
+    position: absolute;
+    right: 15px;
+    bottom: 0;
+}
+.more_fr i{
+    font-size: 20px;
+    color: #3497fd;
+}
+.layui-row .layui-col-xs6:nth-child(1) .layui-card{
+    border-left: 3px solid #3497fd;
+}
+.layui-row .layui-col-xs6:nth-child(2) .layui-card{
+    border-left: 3px solid #dda2ff;
+}
+.layui-row .layui-col-xs6:nth-child(3) .layui-card{
+    border-left: 3px solid #ff5589;
+}
+.layui-row .layui-col-xs6:nth-child(4) .layui-card{
+    border-left: 3px solid #6bf2f2;
+}
+.layui-row .layui-col-xs6:nth-child(4) .layui-card .more_fr i{
+    color: #6bf2f2;
+}
+.layui-row .layui-col-xs6:nth-child(5) .layui-card{
+    border-left: 3px solid #dda2ff;
+}
+.layui-row .layui-col-xs6:nth-child(5) .layui-card .more_fr i{
+    color: #dda2ff;
+}
+.layui-row .layui-col-xs6:nth-child(6) .layui-card{
+    border-left: 3px solid #3497fd;
+}
+.layui-row .layui-col-xs6:nth-child(6) .layui-card .more_fr i{
+    color: #3497fd;
+}
+
+.layui-tab-card.layui-card>.layui-tab-title{
+    width: 100%;
+    margin-left: 1px;
+}
+.layui-tab-card.layui-card>.layui-tab-title li{
+    width: 50%;
+    padding: 0 .5px;
+}
+.layui-tab-card.layui-card>.layui-tab-title li:after {
+    border-width: 0;
+    border-bottom: #fff solid 1px;
+    border-top: 3px solid #3497fd;
+}

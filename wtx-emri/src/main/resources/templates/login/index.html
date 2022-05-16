@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <th:block th:replace="common/common:: common-base"></th:block>
+    <!-- 引入css -->
+    <th:block th:replace="common/common:: common-list-css"></th:block>
+    <link rel="stylesheet" th:href="@{/style/login.css}" media="all">
+</head>
+<body>
+
+<div class="layadmin-user-login login-3" id="LAY-user-login">
+
+    <div class="login-bg">
+
+        <div class="login-box">
+            <!--<img class="login-img" src="../../../images/login-tit.png">-->
+            <form>
+                <img class="login-img2" src="../../../images/login-con.png" alt="">
+                <div class="layadmin-user-login-main layui-form">
+                    <div class="layadmin-user-login-box layadmin-user-login-header">
+                        <h2>欢迎登录系统！</h2>
+                        <!--<p>后台管理模板系统</p>-->
+                    </div>
+                    <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+                        <div class="layui-form-item  login-icon-01">
+                            <!--<span class="layui-login-lay">用户名</span>-->
+                            <input type="text" name="name" lay-verify="required" placeholder="用户名" class="layui-input">
+                        </div>
+                        <div class="layui-form-item">
+                            <!--<span class="layui-login-lay">密 码</span>-->
+                            <input type="password" name="password" lay-verify="required" placeholder="密码" class="layui-input login-icon-02">
+                        </div>
+                    </div>
+                    <div class="layui-form-item mb20" style="padding: 0 20px;">
+                        <a href="forget.html" class="layadmin-user-jump-change" style="margin-top: 7px; color: #999999;"></a>
+                    </div>
+                    <div class="layui-form-item tc mb20">
+                        <a class="layui-btn layui-btn-blue" style="width : 330px;" id="subBtn">登 录</a>
+                    </div>
+                    <div class="pa-box-error">
+                        <p><span id="errorMsg"></span></p>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="layui-trans layadmin-user-login-footer">
+            <p style="color: #ffffff;">©湖南创星科技股份有限公司版权所有</p>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- 引入js -->
+<th:block th:replace="common/common:: common-js"></th:block>
+<script th:inline="javascript">
+
+    $("#subBtn").on('click', function (d) {
+        $("#errorMsg").html();
+        if ($("input[name='name']").val() == ''){
+            $("#errorMsg").html("用户名不可为空");
+            $("#errDiv").css("display", "block");
+            return false;
+        }
+        if ($("input[name='password']").val() == ''){
+            $("#errorMsg").html("密码不可为空");
+            $("#errDiv").css("display", "block");
+            return false;
+        }
+        login($("input[name='name']").val(), $("input[name='password']").val());
+    });
+
+    function login(name, password){
+        wtx.post(_basePath + "login", {"name":name, "password":password}, function (d) {
+            if (d){
+                window.location.href = _basePath + "admin/index";
+            }
+        })
+    }
+
+    $("body").each(function() {
+        $(this).keydown(function() {
+            if(event.keyCode == 13) {
+                $("#subBtn").click();
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

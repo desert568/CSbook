@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>绩效上报管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <th:block th:replace="common/common:: common-base"></th:block>
+    <th:block th:replace="common/common:: common-add-css"></th:block>
+
+    <style>
+        .layui-form-label{
+            width :95px
+        }
+        .layui-input-block{
+            width : 70%;
+            display: grid;
+            margin-left: 105px;
+        }
+    </style>
+</head>
+
+<body>
+<form class="layui-form" style="padding: 20px 10px;">
+    <div class="layui-row layui-col-space10 layui-form-item">
+        <textarea id="json" style="width: 98%; min-height: 400px;">
+
+        </textarea>
+    </div>
+</form>
+
+
+</body>
+<th:block th:replace="common/common:: common-js"></th:block>
+<th:block th:replace="common/common:: common-click"></th:block>
+
+<script th:inline="javascript">
+    var json = [[${obj}]];
+
+    var new_json = parse(json);
+    $("#json").html(new_json);
+
+    function parse(json) {
+        var res="";
+        for(var i = 0,j = 0,k = 0,ii,ele; i <json.length;i++){//k:缩进，j:""个数
+            ele = json.charAt(i);
+            if(j%2 == 0 && ele == "}"){
+                k--;
+                for(ii = 0; ii < k; ii++) ele ="    "+ele;
+                ele ="\n" + ele;
+            }
+            else if(j%2 == 0 && ele == "{"){
+                ele += "\n";
+                k++;
+                for(ii = 0; ii < k; ii++) ele += "    ";
+            }
+            else if(j%2 == 0 && ele == ","){
+                ele +="\n";
+                for(ii = 0;ii < k; ii++) ele +="    ";
+            }
+            else if(ele == "\"") j++;
+            res += ele;
+        }
+        return res;
+    }
+
+
+
+</script>
+</html>

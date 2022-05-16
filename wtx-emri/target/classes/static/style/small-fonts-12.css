@@ -1,0 +1,207 @@
+.layui-fluid,
+.layui-table td, .layui-table th,
+.layui-tab-title li,
+.xm-select-parent .xm-select-title div.xm-select-label>span,
+.xm-form-checkbox > span
+{
+    font-size: 13px!important;
+}
+
+.layui-form-checkbox[lay-skin="primary"] span {
+    padding-right: 5px;
+    line-height: 19px;
+    font-size: 13px!important;
+}
+
+.layui-form-radio *{
+    font-size: 13px;
+}
+.xm-select-parent .xm-select-title div.xm-select-label>span{
+    line-height: 16px;
+    height: 16px;
+    margin: 0px 5px 0px 0;
+}
+.xm-select-parent .xm-select-title div.xm-select-label>span i{
+    line-height: 16px;
+}
+.layui-table-view .layui-table td, .layui-table-view .layui-table th{
+    padding:0;
+}
+.layui-table-tool{
+    min-height: 40px;
+    padding: 5px 15px;
+}
+.layui-table-tool-self{
+    top: 5px;
+}
+.xm-select-parent .xm-select ,
+.xm-select-parent .xm-select--suffix input,
+.layui-input, .layui-select{
+    height: 22px!important;
+    min-height: 22px!important;
+    line-height: 22px!important;
+}
+.layui-input-inline{
+    height: 22px;
+    line-height: 22px;
+}
+.layui-form-radio{
+    line-height: 22px;
+}
+.layui-form-radio>i{
+    font-size: 20px;
+    margin-right: 3px;
+}
+.layui-input-block{
+    min-height: 22px;
+}
+.layui-elem-quote {
+    padding: 10px 10px 0px 10px;
+}
+.layui-form-label{
+    padding:1px 5px;
+}
+.layui-col-sm1.lh28{
+    line-height: 22px;
+}
+.layui-tab{
+    margin: 0;
+}
+hr{
+    margin: 0;
+}
+.layui-card-pa{
+    position: relative;
+}
+.layui-card-pa .layui-card-header-pa{
+    position: absolute;
+    top: 3px;
+    left: 35px;
+    z-index: 10;
+    height: 20px;
+    line-height: 20px;
+    background-color: #3eb8ff;
+    color: #ffffff;
+    padding: 0 5px;
+    border-radius: 2px;
+    font-size: 13px;
+}
+
+.box-all{
+    height: 100%;
+    width: 20px;
+    float: right;
+}
+.box-t,.box-c,.box-b{
+    height: 28px;
+    width:100%;
+    display: inline-block;
+    float: right;
+    font-size: 0;
+}
+.box-t i{
+    display: inline-block;
+    background: url("../images/l-t.png") no-repeat center;
+    height: 28px;
+    width:100%;
+}
+.box-c i{
+    display: inline-block;
+    background: url("../images/l-c.png") repeat-y center;
+    height: 100%;
+    width:100%;
+}
+.box-b i{
+    display: inline-block;
+    background: url("../images/l-b.png") no-repeat center;
+    height: 28px;
+    width:100%;
+}
+.xm-form-checkbox > i {
+    top: 5px!important;
+}
+.layui-input-block span.blue_{
+    display: inline-block;
+    line-height: 22px;
+    height: 22px;
+    color: #1981ff;
+    text-decoration:underline;
+}
+.layui-table-cell{
+    padding: 0 4px;
+    /*text-align: center;*/
+}
+
+.xm-select-parent .xm-select-title{
+    min-height:22px;
+}
+.grid-bg1{
+    background-color: #f4f4f4;
+    padding: 10px 15px;
+}
+.ru_box{
+    line-height: 64px;
+    font-size: 18px;
+}
+.i_01{
+    background: url("../images/ys_1.png") no-repeat center;
+    width: 64px;
+    height: 65px;
+    display: inline-block;
+    float: left;
+    margin-right: 15px;
+}
+.i_02{
+    background: url("../images/ys_2.png") no-repeat center;
+    width: 64px;
+    height: 65px;
+    display: inline-block;
+    float: left;
+    margin-right: 15px;
+}
+.i_03{
+    background: url("../images/ys_3.png") no-repeat center;
+    width: 64px;
+    height: 65px;
+    display: inline-block;
+    float: left;
+    margin-right: 15px;
+}
+.laydate_box, .laydate_box * {
+    box-sizing:content-box;
+}
+.xm-select-parent .xm-select-title{
+    /*min-width:180px;*/
+}
+
+
+/*2019-9-25 layui-tab 选项卡间距去除*/
+.layui-inline .lh28{
+    line-height: 22px;
+}
+.layui-col-md12.layui-bg-white>.layui-tab{
+    margin: 0;
+}
+.layui-col-md12.layui-bg-white>.layui-tab>.layui-tab-content{
+    padding: 0;
+}
+.layui-tab .layui-elem-quote{
+    padding:10px 10px 3px 10px;
+}
+.layui-form-checkbox{
+    height: 20px;
+    line-height: 20px;
+    margin-right: 10px;
+    padding-right: 18px;
+}
+.layui-form-checkbox i{
+    width: 18px;
+    height: 18px;
+}
+.layui-form-checkbox i{
+    font-size: 16px;
+}
+.layui-search>a.i_seach{
+    line-height: 24px;
+    height: 22px;
+}

@@ -1,0 +1,132 @@
+.box-ul{}
+.box-ul ul{
+    overflow: hidden;
+}
+.box-ul li{
+    float: left;
+}
+.box-ul li a{
+    width: 100%;
+    display: inline-block;
+    border: #ddd solid 1px;
+}
+.box-ul li a span{
+    width: 70%;
+    line-height: 87px;
+    text-align: center;
+    display: inline-block;
+    font-size: 18px;
+}
+.box-ul li a span>b{
+    color: #ff0000;
+}
+.box-ul li a div.fl{
+    width: 30%;
+    height: 87px;
+    float: left;
+    text-align: center;
+}
+.box-ul li a div.fl img{
+    margin: 15px auto;
+    height: 57px;
+}
+.table-1 tr td a{
+    color: #666666;
+}
+.card-top{
+    height: 32px;
+    width: 100%;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.fl{
+    float: left;
+}
+.mlr5{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.layui-col-sm6>.layui-card{
+    overflow: hidden;
+}
+
+.lay-body ul{
+    width: 100%;
+    height: 100%;
+    transition-duration: .3s;
+    -webkit-transition-duration: .3s;
+    display: inline-block;
+}
+.lay-body li{
+}
+.lay-body li a{
+    display: block;
+    padding: 10px 15px;
+    background-color: #f8f8f8;
+    color: #999;
+    border-radius: 2px;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+    height: 74px;
+}
+
+.lay-body h3 {
+    padding-bottom: 10px;
+    font-size: 12px
+}
+.lay-body p{
+    color: #333333;
+}
+
+.lay-body p cite {
+    font-style: normal;
+    font-size: 20px;
+    font-weight: 300;
+    color: #009688
+}
+
+/*.lay-body li a:hover {*/
+/*background-color: #f2f2f2;*/
+/*color: #888*/
+/*}*/
+.lay-body .layui-col-xs2-15{
+    float: left;
+    width: 20%;
+}
+.layui-col-sm6>.layui-card>.layui-card-header{
+    font-size: 16px;
+    font-weight: bold;
+}
+.table1 th[align="center"]{
+    text-align: center;
+}
+.table1 th{ font-size: 14px; color: #333; padding:10px 0 10px 0;font-weight: bold;}
+.table1 td{ text-align: center; font-size: 14px; color:#333; padding: 6px 0 ; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 166px;}
+.table1 span{  font-size: 14px;	width: 40px; height: 24px; border-radius: 53px; display: inline-block; background: url("../images/sy_dot.png") no-repeat left center; color: #333; line-height: 24px;  padding-left: 15px;}
+.table1 tr{
+    border-bottom: #0e1c86 solid 1px;
+}
+/*.table1 tr:nth-child(2) span{ color: #ed405d;font-weight:bold; font-size: 14px; min-width: 40px;}*/
+/*.table1 tr:nth-child(3) span{ color: #f78c44;font-weight:bold; font-size: 14px;}*/
+/*.table1 tr:nth-child(4) span{ color: #49bcf7;font-weight:bold; font-size: 14px;}*/
+.sy-gd-pa {
+    position: absolute;
+    right: 10px;
+    z-index: 1;
+    padding-right: 20px;
+    background: url("../images/sy_dot.png") no-repeat right center;
+    font-size: 12px;
+    cursor: pointer;
+    color: #31a0ff;
+}
+a.sy-gd-pa:hover{
+    color:#31a0ff;
+    opacity: .7;
+}
+
+.table1 tr th:nth-child(1){
+    width: 56px;
+}
+.table1 tr th:nth-child(2){
+    width: 200px;
+}

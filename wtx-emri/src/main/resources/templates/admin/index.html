@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<!-- 引入thymeleaf命名空间 */-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<title>电子病历接口系统</title>
+	<meta name="keywords" content="电子病历接口系统"/>
+	<meta name="description" content="电子病历接口系统"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<!-- 引入common/common文件中的代码块common-base -->
+	<th:block th:replace="common/common :: common-base"></th:block>
+	<!-- 引入css -->
+	<th:block th:replace="common/common:: common-list-css"></th:block>
+
+	<link rel="stylesheet" th:href="@{/plug-in/jquery/jquery.contextmenu.css}"/>
+	<!-- basic styles -->
+	<link th:href="@{/plug-in/ace/assets/css/bootstrap.min.css}" rel="stylesheet"/><!--响应式布局样式-->
+	<link th:href="@{/plug-in/hplus/css/font-awesome.min.css?v=4.4.0}" rel="stylesheet"><!--ace字体图标-->
+	<link rel="stylesheet" th:href="@{/plug-in/ace/assets/css/font-awesome.min.css}"/><!--左边栏字体图标-->
+	<!--[if IE 7]>
+	<link rel="stylesheet" th:href="@{/plug-in/ace/assets/css/font-awesome-ie7.min.css}"/>
+	<![endif]-->
+	<link rel="stylesheet" th:href="@{/plug-in/ace/assets/css/ace.min.css}"/>
+	<!--[if lte IE 8]>
+	<link rel="stylesheet" th:href="@{/plug-in/ace/assets/css/ace-ie.min.css}"/>
+	<![endif]-->
+
+	<!-- ace settings handler -->
+	<script th:src="@{/plug-in/ace/assets/js/ace-extra.min.js}"></script>
+	<script type="text/javascript" th:src="@{/plug-in/mutiLang/zh-cn.js}"></script>
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script th:src="@{/plug-in/ace/assets/js/html5shiv.js}"></script>
+	<script th:src="@{/plug-in/ace/assets/js/respond.min.js}"></script>
+	<![endif]-->
+	<style>
+		.w-line{
+			text-align: center;
+			display: inline-block;
+			line-height: 16px;
+			color: #999999;
+		}
+		.w-line em{
+			display: inline-block;
+			height: 3px;
+			width: 65px;
+			background-color: #cccccc;
+		}
+		.w-line.on em.line-red{
+			background-color: #ff545e;
+		}
+		.w-line.on em.line-blue{
+			background-color: #3eb8ff;
+		}
+		.w-line.on em.line-green{
+			background-color: #00a132;
+		}
+		.nav-list>li>.submenu li>.submenu{
+			max-height: 300px;
+			overflow: auto!important;
+		}
+		.nav-list>li>.submenu li>.submenu>li a{
+			white-space: nowrap;
+			overflow: hidden;
+			width: 150px;
+			text-overflow: ellipsis;
+		}
+		.nav-list>li>.submenu li a{
+			white-space: nowrap;
+			overflow: hidden;
+			width: 210px;
+			text-overflow: ellipsis;
+		}
+		.sidebar{
+			overflow-y: auto;
+		}
+	</style>
+</head>
+
+<body class="skin-1">
+<!-- 首页上边部分 start -->
+<div class="navbar navbar-default" id="navbar">
+	<script type="text/javascript">
+        try {
+            ace.settings.check('navbar', 'fixed')
+        } catch (e) {
+        }
+	</script>
+
+	<div class="navbar-container" id="navbar-container" style="height: 80px;">
+		<!-- 首页上边-左边部分 start -->
+		<div class="navbar-header pull-left">
+			<a class="navbar-brand" href="#" style="padding-left: 1px;margin-right: 20px;">
+				<small>
+					<i class="icon-logo"></i>
+					<span style="font-size: 24px; display: inline-block; line-height: 60px;">电子病历接口平台</span>
+					<!--<br><span style="line-height: 22px;font-size: 16px;display: inline-block;">中南大学湘雅二医院</span>-->
+				</small>
+			</a>
+		</div>
+
+		<!-- 首页上边-右边部分 start -->
+		<div class="navbar-header pull-right" role="navigation">
+
+			<ul class="nav ace-nav">
+				<li class="user-name">
+					<i class="icon-use"></i>
+					<span style="font-size: 14px;">
+						<span th:text="超级管理员" style="font-size: 20px;line-height: 60px;"></span>
+					</span>
+
+				</li>
+			</ul>
+		</div>
+		<!-- 首页上边-右边部分 end -->
+	</div>
+</div>
+<!-- 首页上边部分 end -->
+
+<!-- 首页主体部分 start -->
+<div class="main-container" id="main-container">
+	<script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+	</script>
+	<div class="main-container-inner">
+		<a class="menu-toggler" id="menu-toggler" href="#">
+			<span class="menu-text"></span>
+		</a>
+		<!-- 左侧菜单栏 start -->
+		<div class="sidebar" id="sidebar">
+			<script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'fixed')
+                } catch (e) {
+                }
+			</script>
+			<!-- 菜单栏顶部的四个按钮 start -->
+			<div class="sidebar-shortcuts" id="sidebar-shortcuts" style="display:none;">
+				<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+					<button class="btn btn-success">
+						<i class="icon-signal"></i>
+					</button>
+					<button class="btn btn-info">
+						<i class="icon-pencil"></i>
+					</button>
+					<button class="btn btn-warning">
+						<i class="icon-group"></i>
+					</button>
+					<button class="btn btn-danger">
+						<i class="icon-cogs"></i>
+					</button>
+				</div>
+			</div>
+			<!-- 菜单栏顶部的四个按钮 end -->
+			<!-- 菜单展示区域 start -->
+			<ul class="nav nav-list" id="menuTree" style="margin-top: 16px;">
+				<li><a href="javascript:addTabs({id:'1',title:'数据源配置',close: true,url: _basePath + 'source/index'})" title="数据源配置"><span style="padding-left: 5px;">数据源配置</span></a></li>
+				<li><a href="javascript:addTabs({id:'2',title:'SQL配置',close: true,url: _basePath + 'sql/index'})" title="SQL配置"><span style="padding-left: 5px;">SQL配置</span></a></li>
+			</ul>
+			<!-- 菜单展示区域 end -->
+
+			<!--左侧菜单栏展示/收起 start-->
+			<div class="sidebar-collapse" id="sidebar-collapse">
+				<i class="icon-double-angle-left" data-icon1="icon-double-angle-left"
+				   data-icon2="icon-double-angle-right"></i>
+			</div>
+			<script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'collapsed')
+                } catch (e) {
+                }
+			</script>
+			<!--左侧菜单栏展示/收起 end-->
+		</div>
+		<!-- 左侧菜单栏 end -->
+
+		<!--加载栏 必要 start-->
+		<div class="main-content">
+			<div class="page-content">
+				<div class="row">
+					<div class="col-xs-12 top-nav" style="width: 99%;padding-left:0px;padding-right: 0px;" id="tabs">
+						<!-- 主体部分的标签页展示 start -->
+						<!--<div class="">-->
+							<a class="nav-btn btn-last" href="javascript:;"></a>
+							<ul class="nav nav-tabs" role="tablist">
+								<!--<li class="active"><a href="#Index" role="tab" data-toggle="tab">首页</a></li>-->
+							</ul>
+							<a class="nav-btn btn-next" href="javascript:;"></a>
+						<!--</div>-->
+						<!-- 主体部分的标签页展示 end -->
+						<!-- 主体部分的子页面展示 start -->
+						<div class="tab-content" style="padding: 0px;">
+							<div role="tabpanel" class="tab-pane active" id="Index">
+							</div>
+						</div>
+						<!-- 主体部分的子页面展示 end -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--加载栏 end-->
+	</div>
+
+</div>
+<!-- 首页主体部分 end -->
+<script type="text/javascript" th:src="@{/plug-in/jquery/jquery-1.8.3.js}"></script>
+<script type="text/javascript" th:src="@{/plug-in/jquery/jquery.contextmenu.js}"></script>
+<script type="text/javascript" th:src="@{/plug-in/ace/assets/js/ace.min.js}"></script>
+<script type="text/javascript" th:src="@{/plug-in/ace/assets/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/plug-in/ace/assets/js/bootstrap-tab.js}"></script>
+<script type="text/javascript" th:src="@{/plug-in/ace/assets/js/ace-elements.min.js}"></script>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/managerJS/common.js}"/>
+
+<script>
+    layui.config({
+        base: _basePath + "layui/"//这是你存放拓展模块的根目录
+    }).extend({//设定模块别名
+        index: 'lib/index' //相对于上述 base 目录的子目录
+    }).use('index');
+</script>
+<script th:inline="javascript">
+
+    $(function () {
+        <!-- 展示首页 -->
+        addTabs({id:'home',close: false,title:'数据采集',url:_basePath+"admin/top"});
+		var nav_width = parseInt($("#tabs").css("width"))-80;
+        $("#tabs .nav-tabs").css("width",nav_width+'px');
+		$(window).resize(function(){
+			nav_width = parseInt($("#tabs").css("width"))-80;
+			$("#tabs .nav-tabs").css("width",nav_width+'px');
+		})
+    });
+
+
+</script>
+</body>
+</html>

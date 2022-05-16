@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" monitorInterval="60">
+
+	<!--%m 输出代码中指定的消息
+    %p 输出优先级，即DEBUG,INFO,WARN,ERROR,FATAL
+    %r 输出自应用启动到输出该log信息耗费的毫秒数
+    %c 输出所属的类目,通常就是所在类的全名
+    %t 输出产生该日志事件的线程名
+    %n 输出一个回车换行符，Windows平台为“\r\n”，Unix平台为“\n”
+    %d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式
+    如：%d{dd MMM yyyy HH:mm:ss,SSS}，输出类似：02 Nov 2012 14:34:02,781
+    %l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数
+    如：Testlog.main(TestLog.java:10)
+    %F 输出日志消息产生时所在的文件名称
+    %L 输出代码中的行号
+    %x 输出和当前线程相关联的NDC(嵌套诊断环境),像java servlets多客户多线程的应用中
+    %% 输出一个"%"字符-->
+
+	<!-- 定义通用参数 -->
+	<properties>
+		<property name="LOG_HOME">logs/emri</property>
+		<property name="PATTERN_LAYOUT">%d{yyyy-MM-dd HH:mm:ss} [%t] %p %l %m%n</property>
+	</properties>
+
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${PATTERN_LAYOUT}"/>
+		</Console>
+
+		 <!--info级别的日志输出到info/info.log中 每天生成一个log文件-->
+		<RollingFile name="infoFile" fileName="${LOG_HOME}/info/info.log"
+					 filePattern="${LOG_HOME}/info/info-%d{yyyy-MM-dd}_%i.log">
+			<PatternLayout pattern="${PATTERN_LAYOUT}" />
+			<DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}" maxDepth="2">
+                    <IfFileName glob="*/info-*.log.gz" />
+                    <IfLastModified age="1d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+			<Filters>
+				<!--如果是error级别拒绝-->
+				<ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+				<!--如果是debug\info\warn输出-->
+				<ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+			</Filters>
+
+			<!--1、TimeBasedTriggeringPolicy
+			基于时间的触发策略。该策略主要是完成周期性的log文件封存工作。有两个参数：
+			interval，integer型，指定两次封存动作之间的时间间隔。单位:以日志的命名精度来确定单位，比如yyyy-MM-dd-HH 单位为小时，yyyy-MM-dd-HH-mm 单位为分钟
+			modulate，boolean型，说明是否对封存时间进行调制。若modulate=true，则封存时间将以0点为边界进行偏移计算。比如，modulate=true，interval=4hours，那么假设上次封存日志的时间为03:00，则下次封存日志的时间为04:00，之后的封存时间依次为08:00，12:00，16:00，。。。
+			2、SizeBasedTriggeringPolicy
+			控制文件大小，当大于设置大小时，文件会按照filePattern的格式去进行分割
+			3、DefaultRolloverStrategy
+			生成分割文件的个数，默认为7-->
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+				<SizeBasedTriggeringPolicy size="10240 KB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="10" />
+		</RollingFile>
+
+		 <!--error级别的日志输出到error/error.log中 每天生成一个log文件-->
+		<RollingFile name="errorFile" fileName="${LOG_HOME}/error/error.log"
+					 filePattern="${LOG_HOME}/error/error-%d{yyyy-MM-dd}_%i.log">
+			<PatternLayout pattern="${PATTERN_LAYOUT}" />
+			<Filters>
+				<!--如果是error级别则输出-->
+				<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+			</Filters>
+			<Policies>
+				<TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+				<SizeBasedTriggeringPolicy size="10240 KB"/>
+			</Policies>
+			<DefaultRolloverStrategy max="10" />
+		</RollingFile>
+
+	</Appenders>
+	<Loggers>
+		<Root level="info">
+			<AppenderRef ref="Console"/>
+			<AppenderRef ref="infoFile"/>
+			<AppenderRef ref="errorFile"/>
+		</Root>
+		<logger name="org.apache" level="error"/>
+		<logger name="org.springframework" level="info"/>
+		<logger name="org.I0Itec" level="error"/>
+		<logger name="com.alibaba" level="error"/>
+	</Loggers>
+</Configuration>

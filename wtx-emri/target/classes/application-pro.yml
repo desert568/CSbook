@@ -1,0 +1,58 @@
+server:
+  port: 8989
+  context-path: /
+spring:
+  application:
+    name: emri
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url : jdbc:sqlserver://192.168.18.241:1433;databaseName=ba0103
+    username: sa
+    password: 1
+  thymeleaf:
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    cache: false
+    content-type: text/html
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*Mapper.xml,mapper/**/*Mapper.xml
+
+#日志记录
+logging:
+  config: classpath:log4j2.xml
+
+#不向注册中心注册，引入eureka包后会默认向注册中心注册
+eureka:
+  client:
+    # 不向注册中心注册 , 是否注册到服务中心 ， false = 不注册，true = 注册
+    register-with-eureka: false
+    # 不获取注册列表信息, 是否从eureka服务器获取注册信息 , false = 不获取，true = 获取
+    fetch-registry: false
+
+
+wtxName: super
+wtxPwd: 123456
+
+#自动采集定时任务执行频率
+cron: 0 0 3 * * ?
+
+#电子病历数据分段查询(按16天一个线程拆分查询数据)
+day_page: 16
+
+#自动采集多少天前的电子病历数据
+day_before: 15
+
+#采集方式 0、常规 1、http 2、webservice
+emr_flag: 0
+#emr_flag 为 1 需配置
+http_url: http://43.254.156.94:9001/api/ServiceProxy/SendRequest
+#机构编码 emr_flag 为 1 需配置
+org_code: 43000
+isbasyfjx: 1
+#基础表 该表有用于判断是否需要覆盖数据的标志
+
+base_table_name:
+
+#是否使用登录拦截器 1-是 0-否
+use_login: 1

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!-- /* 在html页面中引入thymeleaf命名空间 */-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:wtx="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <th:block th:replace="common/common:: common-base"></th:block>
+    <th:block th:replace="common/common:: common-add-css"></th:block>
+    <link rel="stylesheet" th:href="@{/style/formSelects-v4.css}"/>
+
+</head>
+<body>
+
+<div class="layui-form" style="padding: 20px 10px;">
+    <form id="searchForm">
+    <div class="layui-row layui-col-space10 layui-form-item">
+
+        <input type="hidden" name="source_code" th:value="${obj.source_code }"/>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>数据库名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="source_name"  th:value="${obj.source_name }" lay-verify="required" maxlength="50" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>驱动类型</label>
+            <div class="layui-input-block">
+                <select name="source_type" lay-filter="source_type-filter" lay-verify="required"
+                        xm-select="source_type" xm-select-search="" xm-select-radio="">
+                    <option value="">请选择</option>
+                    <option value="com.microsoft.sqlserver.jdbc.SQLServerDriver" th:selected="${obj.source_type == 'com.microsoft.sqlserver.jdbc.SQLServerDriver'}">SQLServerDriver</option>
+                    <option value="com.mysql.jdbc.Driver" th:selected="${obj.source_type == 'com.mysql.jdbc.Driver'}">mysql</option>
+                    <option value="oracle.jdbc.driver.OracleDriver" th:selected="${obj.source_type == 'oracle.jdbc.driver.OracleDriver'}">Oracle</option>
+                    <option value="com.ibm.db2.jcc.DB2Driver" th:selected="${obj.source_type == 'com.ibm.db2.jcc.DB2Driver'}">Db2</option>
+                    <option value="org.postgresql.Driver" th:selected="${obj.source_type == 'org.postgresql.Driver'}">PostgreSQL</option>
+                    <option value="com.intersys.jdbc.CacheDriver" th:selected="${obj.source_type == 'com.intersys.jdbc.CacheDriver'}">Cache</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>连接地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="source_url"  th:value="${obj.source_url}" lay-verify="required" maxlength="100" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>用户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="user_name" th:value="${obj.user_name}" lay-verify="required" maxlength="50" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>密码</label>
+            <div class="layui-input-block">
+                <input type="text" name="password"  th:value="${obj.password}" lay-verify="required" maxlength="50" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+
+    </div>
+    </form>
+    <div th:if="${#strings.isEmpty(obj1)}" class="layui-form-item layui-layer-btn layui-layer-btn-bottom">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal layui-btn-sm" id="testconnect"><i
+                    class="layui-icon"></i><span>测试连接</span>
+            </button>
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-submit="" lay-filter="sub" lay-event="save">
+                确定</button>
+            <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary" lay-event="cancel"
+                    onclick="wtx.cancel()">取消</button>
+        </div>
+    </div>
+    <div th:unless="${#strings.isEmpty(obj1)}" class="layui-form-item layui-layer-btn layui-layer-btn-bottom">
+        <div class="layui-input-block">
+            <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary" lay-event="cancel"
+                    onclick="wtx.cancel()">取消</button>
+        </div>
+    </div>
+
+</div>
+
+<th:block th:replace="common/common:: common-js"></th:block>
+<script th:src="@{/layui/formSelects-v4.js}"></script>
+
+<!--js中取值时 注意加上 th:inline="javascript"-->
+<script th:inline="javascript">
+    var source_code = [[${obj.source_code}]];
+    layui.use(['form', 'jquery'], function () {
+
+        var form = layui.form
+            , jquery = layui.jquery;
+        var formSelects = layui.formSelects;
+
+        //监听提交
+        form.on('submit(sub)', function (data) {
+            var url = _basePath + 'source/add'
+            wtx.post(url, data.field, function (d) {
+                wtx.success("保存成功！", function () {
+                    wtx.closeWin();
+                })
+            })
+            return false;//必须要有，否则不会执行layer.alert
+        });
+
+
+        //为查看状态时 设置所有输入框，选择框不可操作
+        var see = [[${obj1}]];
+        if (see) {
+            $(".layui-form").find("input,textarea").attr("disabled", "disabled");
+            var select = layui.formSelects;
+            select.disabled();
+        }
+
+        $("#testconnect").click(function () {
+            var parm = wtx.getFormValue("searchForm");
+            wtx.post(_basePath + "source/testConnect", parm, function (d) {
+                wtx.success("测试成功！", function (d) {
+
+                });
+            })
+        })
+
+
+    });
+
+</script>
+</body>
+</html>

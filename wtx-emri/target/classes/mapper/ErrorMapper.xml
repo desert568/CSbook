@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinghis.emri.dao.ErrorMapper">
+
+    <select id="queryList" resultType="com.kinghis.emri.pojo.T_emri_error">
+        select * from T_emri_error t
+        where 1 = 1
+        <if test="null!= start_date and ''!= start_date">
+            and t.start_date >= cast('${start_date}' as datetime)
+        </if>
+        <if test="null!= end_date and ''!= end_date">
+            and t.end_date &lt; cast('${end_date}' as datetime) + 1
+        </if>
+        <if test="null!= patient_id and ''!= patient_id">
+            and t.patient_id like '%${patient_id}%'
+        </if>
+        order by oper_date desc, start_date desc
+    </select>
+
+    <delete id="deleteAll">
+        delete  from T_emri_error  where 1 = 1
+        <if test="null!= start_date and ''!= start_date">
+            and start_date >= cast('${start_date}' as datetime)
+        </if>
+        <if test="null!= end_date and ''!= end_date">
+            and end_date &lt; cast('${end_date}' as datetime) + 1
+        </if>
+    </delete>
+</mapper>

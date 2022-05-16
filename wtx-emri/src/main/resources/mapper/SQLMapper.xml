@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinghis.emri.dao.SQLMapper">
+
+    <insert id="operSql">
+        ${sql}
+    </insert>
+
+    <select id="queryPatInterfaceCount" resultType="java.lang.Integer">
+        select count(*) from ${tableName} WITH(TABLOCKX) where
+        patient_id = #{patient_id} and visit_id = #{visit_id} and update_flag='1'
+    </select>
+
+    <select id="listTable" resultType="com.kinghis.emri.pojo.T_emri_sql">
+        select table_name, table_desc from t_emri_sql
+    </select>
+
+</mapper>
