@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinghis.yyoauth.dao.SysRoleMapper">
+  <resultMap id="BaseResultMap" type="com.kinghis.yyoauth.pojo.SysRole">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ROLE_ID" jdbcType="VARCHAR" property="roleId" />
+    <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName" />
+    <result column="ROLE_DESC" jdbcType="VARCHAR" property="roleDesc" />
+    <result column="PROJECT_CODE" jdbcType="VARCHAR" property="projectCode" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+
+
+  <select id="queryList" resultType="com.kinghis.yyoauth.pojo.SysRole">
+    select * from sys_role where project_code in (
+      select project_code from sys_project where status = '1'
+      <if test="projectCodeList != null and projectCodeList.size > 0">
+          and project_code in
+          <foreach collection="projectCodeList" index="index" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+      </if>
+    ) and status = '1'
+  </select>
+
+  <select id="queryPage" resultType="com.kinghis.yyoauth.pojo.SysRole">
+    select * from sys_role d where d.project_code in (
+      select project_code from sys_project where status = '1'
+      <if test="projectCodeList != null and projectCodeList.size > 0">
+         and project_code in
+        <foreach collection="projectCodeList" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    )
+    <if test="sysRole.roleName != null and sysRole.roleName != ''">and d.role_name like '%${sysRole.roleName}%'</if>
+    <if test="sysRole.status !='' and sysRole.status != null">and d.STATUS = #{sysRole.status}</if>
+    <if test="sysRole.projectCode !='' and sysRole.projectCode != null">and d.project_code = #{sysRole.projectCode}</if>
+    ORDER BY d.UPDATE_DATE desc
+  </select>
+
+  <select id="queryRoleList" resultType="com.kinghis.yyoauth.pojo.SysRole">
+
+    select * from sys_role where ROLE_ID in (
+    select ROLE_ID from SYS_USER_ROLE where 1=1
+    <if test="userid != null and userid != '' ">
+      and USER_ID = #{userid}
+    </if>
+    <if test="projectCode != null and projectCode != '' ">
+      and PROJECT_CODE = #{projectCode}
+    </if>
+    )
+  </select>
+</mapper>

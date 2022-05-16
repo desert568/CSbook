@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinghis.yyoauth.dao.SysHospMapper">
+
+
+  <select id="selectList" resultType="com.kinghis.yyoauth.pojo.sys_hosp">
+    select * from sys_hosp
+  </select>
+  <select id="queryPage" resultType="java.util.Map">
+    select a.org_code,a.hosp_code,a.hosp_name,b.org_name from  sys_hosp a left join TZ_ORGAN_DICT b on a.org_code=b.ORG_CODE
+    where 1 = 1
+    <if test="null!=request.hosp_code and ''!=request.hosp_code">
+      and a.hosp_code like '%${request.hosp_code}%'
+    </if>
+    <if test="null!=request.hosp_name and ''!=request.hosp_name">
+      and hosp_name like '%${request.hosp_name}%'
+    </if>
+    <if test="null!=request.org_code and ''!=request.org_code">
+      and a.org_code = #{request.org_code}
+    </if>
+    order by a.org_code
+  </select>
+  
+</mapper>

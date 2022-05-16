@@ -1,0 +1,79 @@
+html {
+    background-color:#fff;
+    color:#666
+}
+.layui-layer-btn-bottom{
+    padding:6px 15px!important;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 0;
+    background-color: #f8f8f8;
+    z-index: 99;
+    width: 100%;
+}
+.layui-row.layui-form-item{
+    margin-bottom: 30px;
+}
+.layui-form-item .layui-inline {
+    margin-bottom: 5px;
+    margin-right: 10px;
+}
+.layui-input-block{
+    min-height: 28px;
+    margin-left:95px
+}
+.layui-form-label {
+    padding: 4px 5px;
+    width: 85px;
+}
+
+.layui-form-label em{
+    color: #ff0000;
+    margin-right: 3px;
+}
+.layui-input, .layui-select, .layui-textarea {
+    height: 28px;
+    line-height: 28px;
+}
+.layui-form-radio{
+    margin: 0;
+}
+.layui-form-item .layui-form-checkbox{
+    margin-top: 0;
+}
+.layui-form-checkbox{
+    height: 28px;
+    line-height: 28px;
+    margin-right: 10px;
+    padding-right: 22px;
+}
+.layui-form-checkbox span{
+    padding: 0 6px;
+}
+.layui-form-checkbox i{
+    width: 22px;
+    height: 22px;
+}
+.layui-form-select dl{
+    top: 26px;
+}
+.layui-form-selectup dl {
+    top: auto;
+    bottom: 30px;
+}
+/*邮箱后缀*/
+.myemail{
+    width:99%;
+    height:auto;
+    overflow: hidden;
+    background:#fff;
+    color:#6B6B6B;
+    z-index: 99;
+    position:absolute;
+    border:1px solid #ccc;
+}
+
+.layui-col-space15 .layui-table-view{
+    margin: 0 -6px;
+}

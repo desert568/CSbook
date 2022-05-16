@@ -1,0 +1,17 @@
+package com.kinghis.yyoauth.dao;
+
+import com.kinghis.yyoauth.common.WtxBaseMapper;
+import com.kinghis.yyoauth.pojo.DictOrganization;
+import com.kinghis.yyoauth.pojo.SysRole;
+import com.kinghis.yyoauth.pojo.sys_hosp;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+public interface SysHospMapper extends WtxBaseMapper<sys_hosp> {
+
+    List<sys_hosp> selectList();
+
+
+
+}

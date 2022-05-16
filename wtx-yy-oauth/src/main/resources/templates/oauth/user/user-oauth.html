@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>表单元素</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <th:block th:replace="common/common:: common-base"></th:block>
+    <th:block th:replace="common/common:: common-list-css"></th:block>
+    <link rel="stylesheet" th:href="@{/plug-in/jstree/themes/default/style.css}" media="all">
+    <style>
+        .tree-height{min-height: 420px;}
+
+        /*树结构自定义图标颜色设置*/
+        .layui-icon-component,.layui-icon-username{
+            color: #ffb800;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15 treeform-l">
+        <div class="layui-col-sm6">
+            <div class="layui-card tree-height">
+                <div class="layui-card-header h49">
+                    <button type="button" class="layui-btn layui-btn-sm layui-btn-normal mt10" id="saveBtn">保存</button>
+                </div>
+                <div class="layui-card-body" id="roleTree">
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <div class="layui-card tree-height">
+                <div class="layui-card-header">角色权限预览</div>
+                <div class="layui-card-body" id="menuTree">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="common/common:: common-js"></th:block>
+<script th:src="@{/plug-in/jstree/jstree.js}"></script>
+<script th:inline="javascript">
+
+    var roleTree = [[${obj}]];
+    var userId = [[${obj1}]];
+    var userRole = [[${obj2}]];
+
+    $('#roleTree').jstree({
+        'plugins': ["checkbox"],
+        'core': {
+            'check_callback': true,
+            'data': roleTree
+        }
+    }).on('loaded.jstree', function (e, data) {
+        //反勾选
+        var inst = data.instance;
+        for (var i = 0; i < userRole.length; i++){
+            //根据ID获取node
+            var node = inst.get_node(userRole[i].roleId);
+            var isLeaf = inst.is_leaf(node);
+            if (isLeaf){
+                inst.select_node(node);
+            }
+        }
+    });
+
+    var roleId,projectCode,roleName;
+    $('#roleTree').on("changed.jstree", function (e, data) {
+        var node = data.node;
+        if (node){
+            var inst = data.instance;
+            var isLeaf = inst.is_leaf(node);
+            //var parent_id = $('#jstree').jstree('get_parent', node);
+            var parent_id = inst.get_parent(node);
+            if (isLeaf && parent_id && parent_id != '#'){
+                //重复点击时不加载右边菜单
+                if (roleId != node.id){
+                    roleId = node.id;
+                    roleName = node.text;
+                    projectCode = $('#roleTree').jstree('get_parent', node);
+                    //点击时加载当前菜单信息
+                    getMenuData();
+                }
+            }
+        }
+    });
+
+    function getMenuData(){
+        var url = _basePath + "oauth/menu/listMenuByRole";
+        var param = {"roleId" : roleId, "projectCode":projectCode};
+        wtx.get(url, param, function (d) {
+            $('#menuTree').jstree("destroy");
+            $('#menuTree').jstree({
+                'core': {
+                    'check_callback': true,
+                    'data': {
+                        'id': 'root',
+                        'text': roleName,
+                        'state': {'opened': true},
+                        'icon' : 'layui-icon layui-icon-username',
+                        'children': d
+                    }
+                }
+            })
+        })
+    }
+
+    //保存角色权限
+    var ckArr = [];
+    $("#saveBtn").on('click', function(){
+        //清空ckArr数据以免重复
+        ckArr = [];
+        var ref = $('#roleTree').jstree(true)
+        //获取所有选中的节点
+        var cks = $("#roleTree").jstree("get_selected",true);
+        for (var i = 0; i < cks.length; i++){
+            if(ref.is_leaf(cks[i])){
+                var d = {"userId" : userId, "roleId" : cks[i].id, "projectCode" : $('#roleTree').jstree('get_parent', cks[i])}
+                ckArr.push(d);
+            }
+        }
+        var url = _basePath + 'oauth/userRole/save';
+        var str = {
+            "str" : JSON.stringify(ckArr)
+        };
+        wtx.post(url, str, function(d){
+            wtx.success("保存成功！", function(d){
+                wtx.closeWin();
+            })
+        });
+
+    })
+
+</script>
+</body>
+</html>

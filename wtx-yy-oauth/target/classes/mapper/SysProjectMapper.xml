@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinghis.yyoauth.dao.SysProjectMapper">
+  <resultMap id="BaseResultMap" type="com.kinghis.yyoauth.pojo.SysProject">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="PROJECT_CODE" jdbcType="VARCHAR" property="projectCode" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+    <result column="PROJECT_DESC" jdbcType="VARCHAR" property="projectDesc" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+
+  <!-- 获取用户项目权限 -->
+  <select id="getProjectByUser" resultType="SysProject">
+    select t.* from sys_project t where
+      exists(
+             select 1 from sys_user_project p where p.project_code=t.project_code and p.user_id=#{userId}
+      )
+  </select>
+
+  <!-- 根据传进来的值查询对应的projectCode or projectName; -->
+  <select id="listProjectSelect" resultType="SysProject">
+   select t.* from sys_project t where t.status='1'
+    <if test="projectCodeList != null and projectCodeList.size > 0">
+      and t.project_code in
+      <foreach collection="projectCodeList" index="index" item="item" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+    <if test="projectCode != '' and projectCode != null ">
+      and (t.project_code like '%${projectCode}%' or t.project_name like '%${projectCode}%')
+    </if>
+  </select>
+</mapper>

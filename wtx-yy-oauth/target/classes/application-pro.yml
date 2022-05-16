@@ -1,0 +1,63 @@
+server:
+  port: 10002
+  context-path: /
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    #url : jdbc:sqlserver://175.6.27.49:7103;databaseName=ba0103
+    #username: sa
+    #password: Kinghis.com
+    url : jdbc:sqlserver://192.168.18.241:1433;databaseName=ba5.0
+    username: sa
+    password: 1
+  application:
+    name: wtx-yy-oauth
+  thymeleaf:
+    mode: LEGACYHTML5 #非严格检查 HTML5严格检查 使用非严格检查时需要引入nekohtml包
+    encoding: UTF-8
+    content-type: text/html
+    #关闭thymeleaf的缓存，生产环境可配置为true
+    cache: false
+  redis:
+     #Redis数据库索引（默认为0）
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*Mapper.xml
+feign:
+  httpclient:
+    enabled: true
+  okhttp:
+    enabled: true
+
+#ribbon的超时时间(feign调用超时时间)
+ribbon:
+  ReadTimeout: 50000
+  ConnectTimeout: 50000
+#系统自定义属性
+wtxprops:
+  #项目编码
+  project_code: qxgl
+  redis:
+    #登录用户redis超时时间
+    loginuserTimeout: 60000
+  ace:
+    key: 1234567812345678
+    vi: 1234567812345678
+  login:
+    #单点登录服务地址
+    sso_url: http://127.0.0.1:10002/
+    #本地服务地址
+    local_app_url: http://127.0.0.1:10002/
+  file:
+    pdfPwd: 123456
+    path: E:\wtx-hpa\ftpFile\

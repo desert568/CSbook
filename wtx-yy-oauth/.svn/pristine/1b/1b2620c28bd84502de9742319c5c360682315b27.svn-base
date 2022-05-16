@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<!-- 引入thymeleaf命名空间 */-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8"/>
+	<title>权限系统</title>
+	<meta name="keywords" content="权限系统"/>
+	<meta name="description" content="权限系统"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<!-- 引入common/common文件中的代码块common-base -->
+	<th:block th:replace="common/common :: common-base"></th:block>
+	<!-- 引入css -->
+	<th:block th:replace="common/common:: common-list-css"></th:block>
+
+	<link rel="stylesheet" th:href="@{/plug-in/jquery/jquery.contextmenu.css}"/>
+	<!-- basic styles -->
+	<link th:href="@{/plug-in/ace/assets/css/bootstrap.min.css}" rel="stylesheet"/><!--响应式布局样式-->
+	<link th:href="@{/plug-in/hplus/css/font-awesome.min.css?v=4.4.0}" rel="stylesheet"><!--ace字体图标-->
+	<link rel="stylesheet" th:href="@{/plug-in/ace/assets/css/font-awesome.min.css}"/><!--左边栏字体图标-->
+	<!--[if IE 7]>
+	<link rel="stylesheet" th:href="@{/plug-in/ace/assets/css/font-awesome-ie7.min.css}"/>
+	<![endif]-->
+	<link rel="stylesheet" th:href="@{/plug-in/ace/assets/css/ace.min.css}"/>
+	<link rel="stylesheet" th:href="@{/style/admin.css}"/>
+	<!--[if lte IE 8]>
+	<link rel="stylesheet" th:href="@{/plug-in/ace/assets/css/ace-ie.min.css}"/>
+	<![endif]-->
+
+	<!-- ace settings handler -->
+	<script th:src="@{/plug-in/ace/assets/js/ace-extra.min.js}"></script>
+	<script type="text/javascript" th:src="@{/plug-in/mutiLang/zh-cn.js}"></script>
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script th:src="@{/plug-in/ace/assets/js/html5shiv.js}"></script>
+	<script th:src="@{/plug-in/ace/assets/js/respond.min.js}"></script>
+	<![endif]-->
+	<style>
+		.w-line{
+			text-align: center;
+			display: inline-block;
+			line-height: 16px;
+			color: #999999;
+		}
+		.w-line em{
+			display: inline-block;
+			height: 3px;
+			width: 65px;
+			background-color: #cccccc;
+		}
+		.w-line.on em.line-red{
+			background-color: #ff545e;
+		}
+		.w-line.on em.line-blue{
+			background-color: #3eb8ff;
+		}
+		.w-line.on em.line-green{
+			background-color: #00a132;
+		}
+		.layui-layer-page .layui-layer-content{
+			height: 343px!important;
+		}
+		.layui-layer-page .layui-layer-wrap{
+			height: 100%;
+		}
+		.layui-layer-page .layui-form-label{
+			width: 110px;
+		}
+		.layui-layer-page .layui-input-block{
+			margin-left: 120px;
+		}
+	</style>
+</head>
+
+<body>
+<!-- 首页上边部分 start -->
+<div class="navbar navbar-default" id="navbar">
+	<script type="text/javascript">
+        try {
+            ace.settings.check('navbar', 'fixed')
+        } catch (e) {
+        }
+	</script>
+
+	<div class="navbar-container" id="navbar-container">
+		<!-- 首页上边-左边部分 start -->
+		<div class="navbar-header pull-left">
+			<a href="#" class="navbar-brand">
+				<small>
+					<i class="icon-leaf"></i>
+					权限系统
+				</small>
+			</a>
+		</div>
+		<!-- 首页上边-左边部分 end -->
+
+		<!-- 首页上边-右边部分 start -->
+		<div class="navbar-header pull-right" role="navigation">
+			<div style="display: none">
+				<form id="loginOut" th:action="${obj}">
+					<input type="text" id="ticket" name="ticket" value="">
+					<input type="text" name="callback" th:value="${obj1}">
+				</form>
+			</div>
+			<ul class="nav ace-nav">
+				<li class="user-name">
+					<span>欢迎你，</span><span th:text="${obj2.name}"></span>
+				</li>
+
+				<!-- 首页上边-右边-公告部分 start -->
+				<li class="purple">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+						<i class="icon-bell-alt icon-animated-bell"></i>
+						<span class="badge badge-important" id="noticeCount">0</span>
+					</a>
+					<ul class="pull-right dropdown-navbar navbar-pink dropdown-menu dropdown-caret dropdown-close">
+						<li class="dropdown-header" id="noticeTip">
+							<i class="icon-warning-sign"></i>
+							0条公告
+						</li>
+						<li>
+							<ul id="noticeContent">
+								ajax加载
+							</ul>
+						</li>
+						<li>
+							<a href="#" id="noticeContentLink">
+							</a>
+						</li>
+						<li>
+							<a href="javascript:goAllNotice();" id="noticeFooter">
+								查看全部
+								<i class="icon-arrow-right"></i>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<!-- 首页上边-右边-公告部分 end -->
+
+				<!-- 首页上边-右边-消息部分 start -->
+				<li class="green">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+						<i class="icon-envelope icon-animated-vertical"></i>
+						<span class="badge badge-success" id="messageCount">0</span>
+					</a>
+					<ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+						<li class="dropdown-header" id="messageTip">
+							<i class="icon-envelope-alt"></i>
+							0条消息
+						</li>
+						<li>
+							<a href="#" id="messageContent"></a>
+						</li>
+						<li>
+							<a href="javascript:;" id="messageFooter">
+								查看所有消息
+								<i class="icon-arrow-right"></i>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<!-- 首页上边-右边-消息部分 end -->
+
+				<!-- 首页上边-右边-登录用户信息部分 start -->
+				<li class="light-blue">
+					<a data-toggle="dropdown" href="#" class="dropdown-toggle" onclick="bindFrameClick()">
+						<img class="nav-user-photo" th:src="@{/plug-in/ace/avatars/avatar2.png}"
+							 alt="Jason's Photo"/>
+						<!--<span class="user-info">
+                                    <small>管理管理员管理员员</small>
+                                    <span style="color: #666633">管理管理员管理员员</span>
+                                </span>-->
+
+						<i class="icon-caret-down"></i>
+					</a>
+					<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+						<li>
+							<a href="#" id="updatePwd">
+								<i class="icon-cog"></i>
+								修改密码
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<i class="icon-user"></i>
+								个人信息
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<i class="icon-cog"></i>
+								系统消息
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<i class="icon-cog"></i>
+								清除缓存
+							</a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="javascript:;" id="loginOutBtn">
+								<i class="icon-off"></i>
+								注销
+							</a>
+						</li>
+					</ul>
+				</li>
+				<!-- 首页上边-右边-登录用户信息部分 end -->
+			</ul>
+		</div>
+		<!-- 首页上边-右边部分 end -->
+	</div>
+</div>
+<!-- 首页上边部分 end -->
+
+<!-- 首页主体部分 start -->
+<div class="main-container" id="main-container">
+	<script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+	</script>
+	<div class="main-container-inner">
+		<a class="menu-toggler" id="menu-toggler" href="#">
+			<span class="menu-text"></span>
+		</a>
+		<!-- 左侧菜单栏 start -->
+		<div class="sidebar" id="sidebar">
+			<script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'fixed')
+                } catch (e) {
+                }
+			</script>
+			<!-- 菜单栏顶部的四个按钮 start -->
+			<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+				<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+					<button class="btn btn-success">
+						<i class="icon-signal"></i>
+					</button>
+					<button class="btn btn-info">
+						<i class="icon-pencil"></i>
+					</button>
+					<button class="btn btn-warning">
+						<i class="icon-group"></i>
+					</button>
+					<button class="btn btn-danger">
+						<i class="icon-cogs"></i>
+					</button>
+				</div>
+			</div>
+			<!-- 菜单栏顶部的四个按钮 end -->
+
+			<!-- 菜单展示区域 start -->
+			<ul class="nav nav-list" id="menuTree">
+				<!--<li>
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-cubes"></i>
+						<span class="menu-text">系统管理</span>
+						<b class="arrow icon-angle-down"></b>
+					</a>
+					<ul class="submenu">
+						<li>
+							<a href="javascript:addTabs({id:'user',title:'用户管理',close: true,url: _basePath + 'user/user-list'})"
+							   title="用户管理">用户管理</a>
+						</li>
+						<li>
+							<a href="javascript:addTabs({id:'project',title:'项目管理',close: true,url: _basePath + 'project/project-list'})"
+							   title="项目管理">项目管理</a>
+						</li>
+						<li>
+							<a href="javascript:addTabs({id:'role',title:'角色管理',close: true,url:_basePath + 'role/role-list'})"
+							   title="角色管理">角色管理</a>
+						</li>
+						<li>
+							<a href="javascript:addTabs({id:'menu',title:'菜单管理',close: true,url:_basePath + 'menu/menu-index'})"
+							   title="菜单管理">菜单管理</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-align-justify"></i>
+						<span class="menu-text">基础数据</span>
+						<b class="arrow icon-angle-down"></b>
+					</a>
+					<ul class="submenu">
+						<li>
+							<a href="javascript:addTabs({id:'org',title:'机构管理',close: true,url: _basePath + 'org/org-index'})"
+							   title="机构管理">机构管理</a></li>
+					</ul>
+				</li>-->
+			</ul>
+			<!-- 菜单展示区域 end -->
+
+			<!--左侧菜单栏展示/收起 start-->
+			<div class="sidebar-collapse" id="sidebar-collapse">
+				<i class="icon-double-angle-left" data-icon1="icon-double-angle-left"
+				   data-icon2="icon-double-angle-right"></i>
+			</div>
+			<script type="text/javascript">
+                try {
+                    ace.settings.check('sidebar', 'collapsed')
+                } catch (e) {
+                }
+			</script>
+			<!--左侧菜单栏展示/收起 end-->
+		</div>
+		<!-- 左侧菜单栏 end -->
+
+		<!--加载栏 必要 start-->
+		<div class="main-content">
+			<div class="page-content">
+				<div class="row">
+					<div class="col-xs-12" style="width: 99%;padding-left:2px;padding-right: 2px;" id="tabs">
+						<!-- 主体部分的标签页展示 start -->
+						<ul class="nav nav-tabs" role="tablist">
+							<!--<li class="active"><a href="#Index" role="tab" data-toggle="tab">首页</a></li>-->
+						</ul>
+						<!-- 主体部分的标签页展示 end -->
+
+						<!-- 主体部分的子页面展示 start -->
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane active" id="Index">
+							</div>
+						</div>
+						<!-- 主体部分的子页面展示 end -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--加载栏 end-->
+
+		<!--设置 start-->
+		<div class="ace-settings-container" id="ace-settings-container" style="top:100px;">
+			<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+				<i class="icon-cog bigger-150"></i>
+			</div>
+			<div class="ace-settings-box" id="ace-settings-box">
+				<div>
+					<div class="pull-left">
+						<select id="skin-colorpicker" class="hide">
+							<option data-skin="default" value="#438EB9">#438EB9</option>
+							<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+							<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+							<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+						</select>
+					</div>
+					<span>&nbsp; 选择皮肤</span>
+				</div>
+				<div>
+					<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar"/>
+					<label class="lbl" for="ace-settings-navbar"> 固定导航条</label>
+				</div>
+				<div>
+					<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar"/>
+					<label class="lbl" for="ace-settings-sidebar"> 固定滑动条</label>
+				</div>
+				<div>
+					<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl"/>
+					<label class="lbl" for="ace-settings-rtl">切换到左边</label>
+				</div>
+				<div>
+					<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container"/>
+					<label class="lbl" for="ace-settings-add-container">
+						切换窄屏
+						<b></b>
+					</label>
+				</div>
+			</div>
+		</div>
+		<!--设置 end-->
+	</div>
+
+</div>
+<div class="version_pa">版本号：yb-qxgl-0.0.0.1</div>
+</body>
+
+<div id="updatePwdDiv" style="display: none">
+	<div class="layui-row" >
+		<div class="layui-col-md12">
+			<div class="layui-card">
+				<form class="layui-form" action="" lay-filter="component-form-element">
+					<!--<div class="layui-card-header">设置密码</div>-->
+					<div class="layui-card-body">
+						<div class="layui-form-item">
+							<label class="layui-form-label"><em>*</em>原密码：</label>
+							<div class="layui-input-block">
+								<input type="password" name="oldPass" placeholder="原密码" lay-verify="required" autocomplete="off" class="layui-input">
+							</div>
+							<ul class="layui-input-block">
+								<li class="w-line">
+									<em class="line-red"></em><br>
+									<span>弱</span>
+								</li>
+								<li class="w-line">
+									<em class="line-blue"></em><br>
+									<span>中</span>
+								</li>
+								<li class="w-line">
+									<em class="line-green"></em><br>
+									<span>强</span>
+								</li>
+							</ul>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label"><em>*</em>新密码：</label>
+							<div class="layui-input-block">
+								<input type="password" name="newPass" placeholder="新密码" lay-verify="required" autocomplete="off" class="layui-input">
+							</div>
+							<ul class="layui-input-block">
+								<li class="w-line">
+									<em class="line-red"></em><br>
+									<span>弱</span>
+								</li>
+								<li class="w-line">
+									<em class="line-blue"></em><br>
+									<span>中</span>
+								</li>
+								<li class="w-line">
+									<em class="line-green"></em><br>
+									<span>强</span>
+								</li>
+							</ul>
+						</div>
+						<label class="layui-form-label"><em>*</em>确认密码：</label>
+						<div class="layui-input-block">
+							<input type="password" name="confirmPassword" id="confirmPassword_input" lay-verify="confirmPassword" autocomplete="off" placeholder="请再次输入" class="layui-input">
+						</div>
+
+						<div class="layui-form-item layui-layer-btn layui-layer-btn-bottom">
+							<div class="layui-input-block">
+								<button class="layui-btn layui-btn-sm layui-btn-normal" lay-submit="" lay-filter="component-form-element">保存</button>
+							</div>
+						</div>
+
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 首页主体部分 end -->
+
+<script type="text/javascript" th:src="@{/plug-in/jquery/jquery-1.8.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/plug-in/jquery/jquery.contextmenu.js}"></script>
+<script type="text/javascript" th:src="@{/plug-in/ace/assets/js/ace.min.js}"></script>
+<script type="text/javascript" th:src="@{/plug-in/ace/assets/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/plug-in/ace/assets/js/bootstrap-tab.js}"></script>
+<script type="text/javascript" th:src="@{/plug-in/ace/assets/js/ace-elements.min.js}"></script>
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:src="@{/managerJS/common.js}"/>
+<script>
+    layui.config({
+        base: _basePath + "layui/"//这是你存放拓展模块的根目录
+    }).extend({//设定模块别名
+        index: 'lib/index' //相对于上述 base 目录的子目录
+    }).use('index');
+</script>
+<script>
+	layui.config({
+		base: _basePath + "layui/"//这是你存放拓展模块的根目录
+	}).extend({//设定模块别名
+		index: 'lib/index' //相对于上述 base 目录的子目录
+	}).use(['index', 'form'], function(){
+		var $ = layui.$
+				,admin = layui.admin
+				,element = layui.element
+				,form = layui.form;
+		form.render(null, 'component-form-element');
+		element.render('breadcrumb', 'breadcrumb');
+
+		form.on('submit(component-form-element)', function(data){
+			//layer.msg(JSON.stringify(data.field));
+			//return false;
+			var params = data.field;
+			wtx.post(_basePath + "oauth/user/updatePassword", params, function(){
+				wtx.success("修改成功",function () {
+					//location.href =  _basePath + "login/login";
+                    var ticket = wtx.cookie.get("wtx_ticket_id");
+                    $('#ticket').val(ticket);
+					$("#loginOut").submit();
+				});
+
+			});
+			return false;
+		});
+
+		$('input').bind('input propertychange', function() {
+			var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
+			var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+			var enoughRegex = new RegExp("(?=.{6,}).*", "g");
+			if (false == enoughRegex.test($(this).val())) {
+
+				$(this).parents('.layui-form-item').addClass("on")
+				$(this).parents('.layui-form-item').find('ul.layui-input-block li').removeClass('on');
+				//密码小于六位的时候，密码强度图片都为灰色
+			}
+			else if (strongRegex.test($(this).val())) {
+				$(this).parents('.layui-form-item').find('ul.layui-input-block li').removeClass('on');
+				$(this).parents('.layui-form-item').find('ul.layui-input-block li:eq(0)').addClass('on');
+				$(this).parents('.layui-form-item').find('ul.layui-input-block li:eq(1)').addClass('on');
+				$(this).parents('.layui-form-item').find('ul.layui-input-block li:eq(2)').addClass('on');
+				//密码为八位及以上并且字母数字特殊字符三项都包括,强度最强
+			}
+			else if (mediumRegex.test($(this).val())) {
+				$(this).parents('.layui-form-item').find('ul.layui-input-block li').removeClass('on');
+				$(this).parents('.layui-form-item').find('ul.layui-input-block li:eq(0)').addClass('on');
+				$(this).parents('.layui-form-item').find('ul.layui-input-block li:eq(1)').addClass('on');
+				//密码为七位及以上并且字母、数字、特殊字符三项中有两项，强度是中等
+			}
+			else {
+				$(this).parents('.layui-form-item').find('ul.layui-input-block li').removeClass('on');
+				$(this).parents('.layui-form-item').find('ul.layui-input-block li:eq(0)').addClass('on');
+				//如果密码为6为及以下，就算字母、数字、特殊字符三项都包括，强度也是弱的
+			}
+			return true;
+		});
+	});
+
+</script>
+<script>
+    $(function () {
+        <!-- 展示首页 -->
+        addTabs({id:'home',close: false,title:'首页',url:''});
+    });
+
+	function setPassClick(){
+		location.href =  _basePath + "oauth/user/user-password";
+	}
+
+
+
+	/**
+	 * 加载树形菜单
+	 */
+	layui.use(['layer'], function(){
+		var params = {};
+		wtx.post(_basePath + "oauth/user/menuTree", params, function(list){
+			$('#menuTree').html(list[0]);
+		});
+
+		$("#loginOutBtn").on('click', function () {
+            wtx.confirm("确定退出么？", function () {
+				var ticket = wtx.cookie.get("wtx_ticket_id");
+				$('#ticket').val(ticket);
+				$("#loginOut").submit();
+            })
+        });
+
+		$("#updatePwd").on('click', function () {
+			layer.open({
+				shadeClose: false, //点击弹框区域外的地方是否可关闭弹框
+				shade: 0.8,
+				type: 1,
+				title : '修改密码',
+				area: ['500px', '300px'], //宽高
+				content: $('#updatePwdDiv'),
+				maxmin :true//最大化
+			})
+		})
+
+	});
+
+	layui.use('form', function(){
+		var form = layui.form;
+
+		//自定义验证规则
+		form.verify({
+			confirmPassword:function(value,item){
+				var newPass = $("input[name='newPass']").val();
+				if(value!=newPass){
+					return "确认密码与新密码不一致，请重新输入！"
+				}
+			}
+		});
+	});
+
+</script>
+</html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinghis.yyoauth.dao.AreaMapper">
+
+    <select id="queryPage" resultType="java.util.Map">
+        select * from sys_area
+        where
+        1 = 1
+        <if test="null!=request.pinyin and ''!=request.pinyin">
+            and pinyin like '%${request.pinyin}%'
+        </if>
+        <if test="null!=request.wubi and ''!=request.wubi">
+            and wubi like '%${request.wubi}%'
+        </if>
+        <if test="null!=request.areaCode and ''!=request.areaCode">
+            and area_code like '${request.areaCode}%'
+        </if>
+        order by area_code
+    </select>
+
+
+    <select id="query" resultType="java.util.Map">
+        select area_code value,area_name name from sys_area
+        where
+        1 = 1
+        <if test="null!=request.parentCode and ''!=request.parentCode">
+            and parent_code =#{request.parentCode}
+        </if>
+        <if test="null!=request.level and ''!=request.level">
+            and level = #{request.level}
+        </if>
+
+    </select>
+
+</mapper>

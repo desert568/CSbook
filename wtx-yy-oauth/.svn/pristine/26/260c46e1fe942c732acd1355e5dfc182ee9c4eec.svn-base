@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!-- /* 在html页面中引入thymeleaf命名空间 */-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <th:block th:replace="common/common:: common-base"></th:block>
+
+    <th:block th:replace="common/common:: common-add-css"></th:block>
+</head>
+<body>
+
+<div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 10px;">
+    <div class="layui-row layui-col-space10 layui-form-item">
+        <input type="hidden" name="id" th:value="${obj.id }"/>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>服务器IP</label>
+            <div class="layui-input-block">
+                <input type="text" name="serverIp" th:value="${obj.serverIp }" lay-verify="required" autocomplete="off" class="layui-input" maxlength="30">
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>服务器类型</label>
+            <div class="layui-input-block">
+                <select name="type" lay-filter="status-filter" lay-search>
+                    <option value="0" th:selected="${obj.type == '0'}">临时服务器</option>
+                    <option value="1" th:selected="${obj.type == '1'}">正式服务器</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>服务器账号</label>
+            <div class="layui-input-block">
+                <input type="text" name="serverUser" th:value="${obj.serverUser }" lay-verify="required" autocomplete="off" class="layui-input" maxlength="30">
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>服务器密码</label>
+            <div class="layui-input-block">
+                <input type="text" name="serverPwd" th:value="${obj.serverPwd }" lay-verify="required" autocomplete="off" class="layui-input" maxlength="30">
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>FTP端口</label>
+            <div class="layui-input-block">
+                <input type="text" name="ftpPort" th:value="${obj.ftpPort }" lay-verify="required" autocomplete="off" class="layui-input" maxlength="6">
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>FTP账号</label>
+            <div class="layui-input-block">
+                <input type="text" name="ftpUser" lay-verify="required" th:value="${obj.ftpUser}" autocomplete="off" class="layui-input" maxlength="30">
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>FTP密码</label>
+            <div class="layui-input-block">
+                <input type="text" name="ftpPwd" th:value="${obj.ftpPwd}" lay-verify="required" autocomplete="off" class="layui-input" maxlength="30">
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">磁盘(GB)</label>
+            <div class="layui-input-block">
+                <input type="text" name="size" th:value="${obj.size}" autocomplete="off" class="layui-input" maxlength="5">
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">根目录</label>
+            <div class="layui-input-block">
+                <input type="text" name="fileRootPath" th:value="${obj.fileRootPath}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <select name="status" lay-filter="status-filter" lay-search>
+                    <option value="0" th:selected="${obj.status == '0'}">运行</option>
+                    <option value="1" th:selected="${obj.status == '1'}">闲置</option>
+                    <option value="2" th:selected="${obj.status == '2'}">超标</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+    <div class="layui-form-item layui-layer-btn layui-layer-btn-bottom">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-submit="" lay-filter="sub">确定</button>
+            <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary" onclick="wtx.closeWin()">取消</button>
+        </div>
+    </div>
+
+</div>
+
+
+<th:block th:replace="common/common:: common-js"></th:block>
+<script th:inline="javascript">
+
+    layui.use(['form'], function(){
+
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(sub)', function(data){
+            var url = '';
+            if (data.field.id == ''){
+                url = _basePath + 'data/ftp/add'
+            } else {
+                url = _basePath + 'data/ftp/update'
+            }
+            wtx.post(url, data.field, function(d){
+                wtx.alert("保存成功！", function(){
+                    wtx.closeWin();
+                })
+            })
+            return false;//必须要有，否则不会执行layer.alert
+        });
+
+    });
+
+</script>
+</body>
+</html>

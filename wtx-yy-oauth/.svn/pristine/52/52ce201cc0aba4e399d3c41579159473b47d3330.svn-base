@@ -1,0 +1,13 @@
+#所有项目都必须配置
+
+#过滤器配置，以/开头,不支持参数url, 值：anon匿名登录，user记住我或者登录，authc 必须登录, no 忽略上下文
+#注意，权限系统项目，不能把登录页面也注册为需要用户验证
+
+/admin/.*=authc
+/oauth/user/.*=authc
+/oauth/menu/.*=authc
+/oauth/project/.*=authc
+/oauth/role/.*=authc
+/oauth/roleper/.*=authc
+/oauth/select/.*=authc
+/oauth/userrole/.*=authc

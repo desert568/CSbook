@@ -1,0 +1,62 @@
+server:
+  port: 10003
+  context-path: /wtx-yy-oauth
+spring:
+  datasource:
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    url: jdbc:sqlserver://192.168.30.241:1433;databaseName=zyfy_ba_new
+#    username: sa
+#    password: 1
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@//192.168.30.241:1521/orcl
+    username: wtx_data_yb
+    password: wtx_data_yb
+  application:
+    name: wtx-yy-oauth
+  thymeleaf:
+    mode: LEGACYHTML5 #非严格检查 HTML5严格检查 使用非严格检查时需要引入nekohtml包
+    encoding: UTF-8
+    content-type: text/html
+    #关闭thymeleaf的缓存，生产环境可配置为true
+    cache: false
+  redis:
+     #Redis数据库索引（默认为0）
+    database: 0
+    host: dev.liujifeng.net
+    port: 6379
+    password: wtx_redis
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10000/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*Mapper.xml
+feign:
+  httpclient:
+    enabled: true
+  okhttp:
+    enabled: true
+
+#ribbon的超时时间(feign调用超时时间)
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+#系统自定义属性
+wtxprops:
+  #项目编码
+  project_code: qxgl
+  redis:
+    #登录用户redis超时时间
+    loginuserTimeout: 3600
+  ace:
+    key: 1234567812345678
+    vi: 1234567812345678
+  login:
+    #单点登录服务地址
+    sso_url: http://127.0.0.1:10003/wtx-yy-oauth
+    #本地服务地址
+    local_app_url: http://127.0.0.1:10003/wtx-yy-oauth

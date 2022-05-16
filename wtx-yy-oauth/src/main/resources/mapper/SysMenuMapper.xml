@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinghis.yyoauth.dao.SysMenuMapper">
+  <resultMap id="BaseResultMap" type="com.kinghis.yyoauth.pojo.SysMenu">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="MENU_CODE" jdbcType="VARCHAR" property="menuCode" />
+    <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName" />
+    <result column="PROJECT_CODE" jdbcType="VARCHAR" property="projectCode" />
+    <result column="PARENT_CODE" jdbcType="VARCHAR" property="parentCode" />
+    <result column="MENU_NO" jdbcType="VARCHAR" property="menuNo" />
+    <result column="MENU_URL" jdbcType="VARCHAR" property="menuUrl" />
+    <result column="ICON_CODE" jdbcType="VARCHAR" property="iconCode" />
+    <result column="ICON_URL" jdbcType="VARCHAR" property="iconUrl" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+
+
+  <!-- 获取用户菜单权限 -->
+  <select id="getMenusByUser" resultType="SysMenu">
+    select * from sys_menu m where m.menu_code in
+    (
+    select b.menu_code from sys_user_role a, sys_role_permission b
+    where a.role_id=b.role_id and a.user_id=#{userId}
+    <if test="projectCode != null and projectCode != ''">
+      and a.project_code=#{projectCode}
+    </if>
+
+    ) and m.status='1'
+  </select>
+
+
+  <!--获取角色菜单-->
+  <select id="queryListByRole" resultType="SysMenu">
+    select * from sys_menu m where m.menu_code in
+      ( select a.menu_code
+          from SYS_ROLE_PERMISSION a, SYS_ROLE b, sys_project c
+         where a.role_id = b.role_id
+           and a.project_code = b.project_code
+           and b.project_code = c.project_code
+           and a.role_id = #{permission.roleId} and a.project_code = #{permission.projectCode}
+        )
+  </select>
+</mapper>

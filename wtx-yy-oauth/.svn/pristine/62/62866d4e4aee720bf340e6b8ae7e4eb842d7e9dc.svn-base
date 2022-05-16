@@ -1,0 +1,101 @@
+package com.kinghis.yyoauth.service.impl;
+
+import cn.trasen.BootComm.model.DataSet;
+import cn.trasen.core.feature.orm.mybatis.Page;
+import com.kinghis.yyoauth.dao.SysUserProjectMapper;
+import com.kinghis.yyoauth.dao.SysUserRoleMapper;
+import com.kinghis.yyoauth.pojo.SysUserProject;
+import com.kinghis.yyoauth.pojo.SysUserRole;
+import com.kinghis.yyoauth.service.SysUserRoleService;
+import com.wtx.common.util.CommonUtil;
+import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * @Desc 用户角色信息
+ * @Author liuc
+ * @Date 2019-01-29 12:24
+ */
+@Service("sysUserRoleService")
+public class SysUserRoleServiceImpl  implements SysUserRoleService {
+
+    @Resource
+    private SysUserRoleMapper mapper;
+
+    @Resource
+    private SysUserProjectMapper projectMapper;
+
+    @Override
+    public SysUserRole getSysUserRole(String id) {
+        return this.mapper.selectByPrimaryKey(id);
+    }
+
+
+    @Override
+    public List<SysUserRole> queryList(SysUserRole sysUserRole) {
+        return this.mapper.select(sysUserRole);
+    }
+
+    @Override
+    public DataSet<SysUserRole> queryPage(SysUserRole sysUserRole, Page page) {
+        Example example = new Example(SysUserRole.class);
+        Example.Criteria criteria = example.createCriteria();
+        //if(!CommonUtil.isEmpty(sysUserRole.getName())){
+        //    criteria.andLike("name","%"+sysUserRole.getName()+"%");
+        //}
+        List<SysUserRole> list = this.mapper.selectByExampleAndRowBounds(example,page);
+        return new DataSet<>(page.getPageNo(), page.getPageSize(), page.getTotalPages(), page.getTotalCount(), list);
+    }
+
+    @Override
+    public int save(SysUserRole sysUserRole) {
+        return this.mapper.insertSelective(sysUserRole);
+    }
+
+    @Override
+    public int delete(String id) {
+        return this.mapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int update(SysUserRole sysUserRole) {
+        return this.mapper.updateByPrimaryKeySelective(sysUserRole);
+    }
+
+    @Override
+    public int updateAll(SysUserRole sysUserRole) {
+        return this.mapper.updateByPrimaryKey(sysUserRole);
+    }
+
+    @Override
+    public void batchSave(List<SysUserRole> list) {
+        if (CommonUtil.isNotEmpty(list)){
+            SysUserRole userRole = new SysUserRole();
+            userRole.setUserId(list.get(0).getUserId());
+            List<SysUserRole> oldList = mapper.select(userRole);
+
+            for (SysUserRole old : oldList){
+                mapper.deleteByPrimaryKey(old.getUId());
+            }
+
+            for (SysUserRole obj : list){
+                obj.setUId(CommonUtil.generateId());
+                mapper.insertSelective(obj);
+
+                //判断是否有当前角色所属项目的权限，如果没有则添加项目权限，如果有则不做操作
+                SysUserProject userProject = new SysUserProject();
+                userProject.setProjectCode(obj.getProjectCode());
+                userProject.setUserId(obj.getUserId());
+                List<SysUserProject> oldUserProject = projectMapper.select(userProject);
+                if (CommonUtil.isEmpty(oldUserProject)){
+                    userProject.setUId(CommonUtil.generateId());
+                    projectMapper.insertSelective(userProject);
+                }
+            }
+        }
+
+    }
+}

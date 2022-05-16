@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinghis.yyoauth.dao.SysUserMapper">
+  <resultMap id="BaseResultMap" type="com.kinghis.yyoauth.pojo.SysUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="LOGIN_NAME" jdbcType="VARCHAR" property="loginName" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="SEX_CODE" jdbcType="VARCHAR" property="sexCode" />
+    <result column="SEX_NAME" jdbcType="VARCHAR" property="sexName" />
+    <result column="ID_CARD" jdbcType="VARCHAR" property="idCard" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="USER_TYPE" jdbcType="VARCHAR" property="userType" />
+    <result column="ORG_CODE" jdbcType="VARCHAR" property="orgCode" />
+    <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+    <result column="IS_SUPER" jdbcType="VARCHAR" property="isSuper" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="LAST_LOGIN_IP" jdbcType="VARCHAR" property="lastLoginIp" />
+  </resultMap>
+
+  <!-- 用户登录 -->
+  <select id="login" resultType="SysUser">
+    select t.* from sys_user t where t.login_name=#{loginToken.username} and t.password=#{loginToken.password}
+    and t.status = '1'
+    <if test="loginToken.username != 'super'">
+    and exists(
+        select 1 from sys_user_project p where p.user_id=t.user_id
+    )
+    </if>
+  </select>
+
+  <select id="selectList" resultType="SysUser">
+    select t.* from sys_user t where t.user_id = #{userId}
+  </select>
+</mapper>

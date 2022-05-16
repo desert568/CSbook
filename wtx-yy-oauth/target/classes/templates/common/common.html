@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- 定义代码块common-base -->
+<th:block th:fragment="common-base">
+	<script type="text/javascript" th:inline="javascript">
+        var _basePath = /*[[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort()} + @{/}]]*/;
+        if (!(_basePath.charAt(_basePath.length-1)=="/")){
+            _basePath = _basePath.split(";")[0];
+        }
+	</script>
+</th:block>
+
+<!-- 定义代码块common-css -->
+<th:block th:fragment="common-list-css">
+	<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+	<link rel="stylesheet" th:href="@{/style/admin.css}" media="all" />
+	<link rel="stylesheet" th:href="@{/style/formSelects-v4.css}" media="all" />
+</th:block>
+
+<!-- 定义代码块common-add-css -->
+<th:block th:fragment="common-add-css">
+	<link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all" />
+	<link rel="stylesheet" th:href="@{/style/openwin.css}" media="all" />
+	<link rel="stylesheet" th:href="@{/style/formSelects-v4.css}" media="all" />
+</th:block>
+
+<!-- 定义代码块common-js -->
+<th:block th:fragment="common-js">
+	<script th:src="@{/plug-in/jquery/jquery-1.8.0.min.js}"></script>
+    <script th:src="@{/layui/layui.js}"></script>
+	<script th:src="@{/managerJS/common.js}"></script>
+	<script th:src="@{/managerJS/formSelects-v4.js}"></script>
+
+</th:block>
+
+
+<th:block th:fragment="common-click">
+	<!--单击行勾选-->
+	<script>
+        $(document).on("click", ".layui-table-body table.layui-table tbody tr", function (e) {
+            if ($(e.target).hasClass("layui-table-col-special") || $(e.target).parent().hasClass("layui-table-col-special")) {
+                return false;
+            }
+            var index = $(this).attr('data-index'), tableBox = $(this).closest('.layui-table-box'),
+                tableFixed = tableBox.find(".layui-table-fixed.layui-table-fixed-l"),
+                tableBody = tableBox.find(".layui-table-body.layui-table-main"),
+                tableDiv = tableFixed.length ? tableFixed : tableBody,
+                checkCell = tableDiv.find("tr[data-index=" + index + "]").find("td div.laytable-cell-checkbox div.layui-form-checkbox i"),
+                radioCell = tableDiv.find("tr[data-index=" + index + "]").find("td div.laytable-cell-radio div.layui-form-radio i");
+            if (checkCell.length) {
+                checkCell.click();
+            }
+            if (radioCell.length) {
+                radioCell.click();
+            }
+        });
+        $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox,td div.laytable-cell-radio div.layui-form-radio", function (e) {
+            e.stopPropagation();
+        });
+	</script>
+</th:block>
+
+</body>
+</html>
+
+
+
+

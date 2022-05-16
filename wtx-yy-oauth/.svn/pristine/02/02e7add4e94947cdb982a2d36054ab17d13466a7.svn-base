@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<!-- /* 在html页面中引入thymeleaf命名空间 */-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <th:block th:replace="common/common:: common-base"></th:block>
+
+    <th:block th:replace="common/common:: common-add-css"></th:block>
+</head>
+<body>
+
+<div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 10px;">
+    <div class="layui-row layui-col-space10 layui-form-item">
+        <input type="hidden" name="userId" th:value="${obj.userId }"/>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>用户名</label>
+            <div class="layui-input-block">
+                <input th:if="${#strings.isEmpty(obj.userId)}" type="text" name="loginName" th:value="${obj.loginName }" lay-verify="required" autocomplete="off" class="layui-input" maxlength="8">
+                <input th:unless="${#strings.isEmpty(obj.userId)}" readonly type="text" name="loginName" th:value="${obj.loginName }" lay-verify="required" autocomplete="off" class="layui-input" maxlength="8">
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" th:value="${obj.password }" lay-verify="required" autocomplete="off" class="layui-input" maxlength="20">
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>人员编码</label>
+            <div class="layui-input-block">
+                <input type="text" name="member_code" th:value="${obj.member_code }" lay-verify="required" autocomplete="off" class="layui-input" maxlength="20">
+            </div>
+        </div>
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" th:value="${obj.name }" lay-verify="required" autocomplete="off" class="layui-input" maxlength="8">
+            </div>
+        </div>
+
+        <div class="layui-col-sm6" lay-filter="sex">
+            <label class="layui-form-label"><em>*</em>性别</label>
+            <div class="layui-input-block">
+                <select name="sexCode" lay-filter="sexCode-filter">
+                    <option value="1" th:selected="${obj.sexCode == '1'}">男</option>
+                    <option value="2" th:selected="${obj.sexCode == '2'}">女</option>
+                </select>
+                <input type="hidden" name="sexName">
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">身份证号</label>
+            <div class="layui-input-block">
+                <input type="text" name="idCard" lay-verify="idCard" th:value="${obj.idCard}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">手机号码</label>
+            <div class="layui-input-block">
+                <input type="text" name="phone" th:value="${obj.phone}" lay-verify="phone" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label"><em>*</em>所属机构</label>
+            <div class="layui-input-block">
+                <select id="orgCode" name="orgCode" lay-filter="orgCode-filter" lay-search lay-verify="required">
+
+                </select>
+                <input type="hidden" name="orgName" th:value="${obj.orgName}">
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">所属科室</label>
+            <div class="layui-input-block">
+                <select name="dept_list" lay-verify="" xm-select="deptCode" xm-select-search="" xm-select-show-count="1">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">所属院区</label>
+            <div class="layui-input-block">
+                <select name="hosp_list" lay-verify="" xm-select="hospCode" xm-select-show-count="1">
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">权限类型</label>
+            <div class="layui-input-block">
+                <select name="data_auth" lay-filter="userType-filter" lay-search>
+                    <option value="1" th:selected="${obj.data_auth == '1'}">全院</option>
+                    <option value="2" th:selected="${obj.data_auth == '2'}">所属科室</option>
+                    <option value="3" th:selected="${obj.data_auth == '3'}">个人</option>
+                    <option value="4" th:selected="${obj.data_auth == '4'}">分院</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">用户类型</label>
+            <div class="layui-input-block">
+                <select name="userType" lay-filter="userType-filter" lay-search>
+                    <option value="system" th:selected="${obj.userType == 'system'}">系统用户</option>
+                    <option value="bx" th:selected="${obj.userType == 'bx'}">保险公司</option>
+                    <option value="other" th:selected="${obj.userType == 'other'}">其他</option>
+                </select>
+            </div>
+        </div>
+
+        <!--<div class="layui-col-sm6">
+            <label class="layui-form-label">是否超级管理员</label>
+            <div class="layui-input-block">
+                <select name="isSuper" lay-filter="isSuper-filter" lay-search>
+                    <option value="0" th:selected="${obj.isSuper == '0'}">否</option>
+                    <option value="1" th:selected="${obj.isSuper == '1'}">是</option>
+                </select>
+            </div>
+        </div>-->
+
+        <div class="layui-col-sm6">
+            <label class="layui-form-label">有效状态</label>
+            <div class="layui-input-block">
+                <select name="status" lay-filter="status-filter" lay-search>
+                    <option value="1" th:selected="${obj.status == '1'}">有效</option>
+                    <option value="0" th:selected="${obj.status == '0'}">无效</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+    <div class="layui-form-item layui-layer-btn layui-layer-btn-bottom">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-submit="" lay-filter="sub">确定</button>
+            <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary" onclick="wtx.closeWin()">取消</button>
+        </div>
+    </div>
+
+</div>
+
+
+<th:block th:replace="common/common:: common-js"></th:block>
+<script th:inline="javascript">
+
+    var orgCode = [[${obj.orgCode}]];
+    var dept_list = [[${obj.dept_list}]];
+    var hosp_list = [[${obj.hosp_list}]];
+    layui.use(['form'], function(){
+
+        var form = layui.form;
+        var formSelect = layui.formSelects;
+
+        form.on('select(sexCode-filter)', function(data){
+            var text = data.elem[data.elem.selectedIndex].text;
+            $("input[name=sexName]").val(text);
+        });
+
+        //初始化项目下拉框
+        wtx.initSelect("orgCode", _basePath + "data/org/listFormSelect", {}, orgCode);
+        var dept = [];
+        if (dept_list){
+            dept = dept_list.split(",");
+            //科室下拉框
+            initDeptSelect(orgCode, dept);
+        } else {
+            if (orgCode){
+                initDeptSelect(orgCode, []);
+            }else{
+                initDeptSelect('',[])
+            }
+        }
+
+        var hosp = [];
+        if (hosp_list){
+            hosp = hosp_list.split(",");
+            //科室下拉框
+            initHospSelect(orgCode, hosp);
+        } else {
+            if (orgCode){
+                initHospSelect(orgCode, []);
+            }else{
+                initHospSelect('',[])
+            }
+        }
+
+        //监听下拉框
+        form.on('select(orgCode-filter)', function(data){
+            var text = data.elem[data.elem.selectedIndex].text;
+            $("input[name=orgName]").val(text);
+
+            initDeptSelect(data.value, []);
+
+            initHospSelect(data.value, []);
+        });
+
+        function initDeptSelect(value, selectCode){
+            formSelect.render("deptCode");
+            wtx.formSelects("deptCode", _basePath + "data/dept/listDeptSelect?org_code=" + value, selectCode, "searchName");
+            formSelect.btns('deptCode', []);
+        }
+
+        //所属院区
+        function initHospSelect(value, selectCode){
+            formSelect.render("hospCode");
+            wtx.formSelects("hospCode", _basePath + "data/org/listHospSelect?org_code=" + value, selectCode, "searchName");
+            formSelect.btns('hospCode', []);
+        }
+
+        //自定义验证规则
+        form.verify({
+            phone: function (value) {
+                if (value){
+                    var reg = /^1[3|4|5|8|9][0-9]\d{8}$/;
+                    if (!reg.test(value)) {
+                        return '请输入正确的手机号码';
+                    }
+                }
+            }
+            , idCard: function (value) {
+                if (value){
+                    var result = wtx.checkIdCard(value);
+                    if (!result) {
+                        return '请输入正确的身份证号码';
+                    }
+                }
+            }
+        });
+
+        //监听提交
+        form.on('submit(sub)', function(data){
+            var url = '';
+            if (data.field.userId == ''){
+                url = _basePath + 'oauth/user/add'
+            } else {
+                url = _basePath + 'oauth/user/update'
+            }
+            wtx.post(url, data.field, function(d){
+                wtx.alert("保存成功！", function(){
+                    wtx.closeWin();
+                })
+            })
+            return false;//必须要有，否则不会执行layer.alert
+        });
+
+    });
+
+</script>
+</body>
+</html>

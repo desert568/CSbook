@@ -1,0 +1,61 @@
+package com.kinghis.yyoauth.service.impl;
+
+import cn.trasen.BootComm.model.DataSet;
+import cn.trasen.core.feature.orm.mybatis.Page;
+import com.github.pagehelper.PageInfo;
+import com.kinghis.yyoauth.dao.DictMapper;
+import com.kinghis.yyoauth.pojo.T_jxkh_dept;
+import com.kinghis.yyoauth.service.DeptService;
+import com.wtx.common.util.CommonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class DeptServiceImpl implements DeptService {
+
+    @Autowired
+    private DictMapper dictMapper;
+
+    @Override
+    public DataSet<Map<String,Object>> queryPage(T_jxkh_dept t_jxkh_dept, Page page) {
+        List<Map<String,Object>> list = dictMapper.queryPage(page, t_jxkh_dept);
+        PageInfo pageInfo = new PageInfo(list);
+        String total = String.valueOf(pageInfo.getTotal());
+        return new DataSet<>(page.getPageNo(), page.getPageSize(), page.getTotalPages(), Integer.parseInt(total), list);
+    }
+
+
+    @Override
+    public T_jxkh_dept getDeptById(String id) {
+        return dictMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public void save(T_jxkh_dept t_jxkh_dept) {
+        t_jxkh_dept.setId(CommonUtil.generateId());
+        dictMapper.insertSelective(t_jxkh_dept);
+    }
+
+    @Override
+    public void update(T_jxkh_dept t_jxkh_dept) {
+        dictMapper.updateByPrimaryKey(t_jxkh_dept);
+    }
+
+    @Override
+    public void deleteByIds(String ids) {
+        dictMapper.deleteByIds(ids);
+    }
+
+    @Override
+    public List<T_jxkh_dept> listDeptSelect(String org_code) {
+        T_jxkh_dept dept = new T_jxkh_dept();
+        if (CommonUtil.isNotEmpty(org_code)){
+            dept.setOrg_code(org_code);
+        }
+        return dictMapper.select(dept);
+    }
+
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinghis.yyoauth.dao.SysUserProjectMapper">
+  <resultMap id="BaseResultMap" type="com.kinghis.yyoauth.pojo.SysUserProject">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="U_ID" jdbcType="VARCHAR" property="uId" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="PROJECT_CODE" jdbcType="VARCHAR" property="projectCode" />
+  </resultMap>
+</mapper>

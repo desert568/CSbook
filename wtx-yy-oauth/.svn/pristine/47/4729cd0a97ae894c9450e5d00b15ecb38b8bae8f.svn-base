@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kinghis.yyoauth.dao.SysFuncMapper">
+  <resultMap id="BaseResultMap" type="com.kinghis.yyoauth.pojo.SysFunc">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="FUNC_CODE" jdbcType="VARCHAR" property="funcCode" />
+    <result column="FUNC_NAME" jdbcType="VARCHAR" property="funcName" />
+    <result column="MENU_CODE" jdbcType="VARCHAR" property="menuCode" />
+    <result column="PROJECT_CODE" jdbcType="VARCHAR" property="projectCode" />
+    <result column="FUNC_DESC" jdbcType="VARCHAR" property="funcDesc" />
+  </resultMap>
+
+  <!-- 获取用户按钮权限 -->
+  <select id="getFunsByUser" resultType="SysFunc">
+    select * from sys_func f where f.func_code in
+    (
+    select b.func_code from sys_user_role a, sys_role_permission b,sys_menu c where a.role_id=b.role_id and b.menu_code=c.menu_code
+    and c.status='1' and a.user_id=#{userId}
+    <if test="projectCode != null and projectCode != ''">
+      and a.project_code=#{projectCode}
+    </if>
+
+    )
+  </select>
+</mapper>

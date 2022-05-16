@@ -1,0 +1,409 @@
+#LAY_app,body,html {
+    height: 100%;
+    background-color: #ffffff;
+}
+
+.layui-input, .layui-select, .layui-textarea{
+    height: 42px;
+    line-height: 42px;
+}
+.layui-layout-body {
+    overflow: auto
+}
+
+#LAY-user-login,.layadmin-user-display-show {
+    /*min-height: 690px;*/
+    display: block!important;
+    background: url("../images/login-bg2.jpg") no-repeat center;
+}
+/*.login-img{*/
+/*height: 480px;*/
+/*margin-top: 80px;*/
+/*}*/
+.login-img2{
+    height: 250px;
+    float: left;
+    margin-top: 60px;
+}
+.login-box{
+    width: 80%;
+    margin: 0 auto;
+}
+/*@media screen and (max-width: 1700px) {*/
+/*.login-box{*/
+/*width: 1420px;*/
+/*margin: 0 auto;*/
+/*}*/
+/*}*/
+/*@media screen and (max-width: 1440px) {*/
+/*.login-box{*/
+/*width: 1280px;*/
+/*margin: 0 auto;*/
+/*}*/
+/*.login-img{*/
+/*height: 440px;*/
+/*margin-top: 80px;*/
+/*}*/
+/*.layadmin-user-login{*/
+/*min-height: 80%;*/
+/*}*/
+/*.layadmin-user-login-main{*/
+/*margin-top: 110px!important;*/
+/*}*/
+/*}*/
+/*@media screen and (max-width: 1280px) {*/
+/*.login-box{*/
+/*width: 1000px;*/
+/*margin: 0 auto;*/
+/*}*/
+/*.login-img{*/
+/*height: 350px;*/
+/*margin-top: 80px;*/
+/*}*/
+/*.layadmin-user-login{*/
+/*min-height: 80%;*/
+/*}*/
+/*.layadmin-user-login-main{*/
+/*margin-top: 80px!important;*/
+/*margin-right: 0!important;*/
+/*}*/
+/*}*/
+@media screen and (max-height: 900px) {
+    #LAY-user-login, .layadmin-user-display-show{
+        height:799px;
+        background-size: auto 700px ;
+    }
+}
+@media screen and (max-height: 850px) {
+    #LAY-user-login, .layadmin-user-display-show{
+        height: 809px;
+        background-size: auto 650px ;
+    }
+}
+@media screen and (max-height: 800px) {
+    #LAY-user-login, .layadmin-user-display-show{
+        height: 759px;
+        background-size: auto 600px ;
+    }
+}
+@media screen and (max-height: 750px) {
+    #LAY-user-login, .layadmin-user-display-show{
+        height: 719px;
+        background-size: auto 550px ;
+    }
+}
+
+.layadmin-user-login {
+    position: relative;
+    left: 0;
+    top: 0;
+    padding: 5% 0;
+    min-height: 100%;
+    box-sizing: border-box
+}
+
+.layadmin-user-login-main {
+    width: 375px;
+    float: right;
+    margin-top: 150px;
+    margin-right: 10%;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border-radius: 20px;
+    position: relative;
+}
+.layui-btn.layui-btn-blue{
+    background-color: #01b9d3;
+    border-radius: 20px;
+    height: 34px!important;
+    line-height: 34px!important;
+    width: 150px;
+}
+.layadmin-user-login-box {
+    padding: 20px
+}
+
+.layadmin-user-login-header {
+    /*text-align: center*/
+}
+
+.layadmin-user-login-header h2 {
+    /*margin-bottom: 10px;*/
+    /*font-weight: 400;*/
+    font-size: 24px;
+    color: #089ed0;
+    font-family: "瀹嬩綋";
+    font-weight: bold;
+}
+
+.layadmin-user-login-header p {
+    font-weight: 300;
+    color: #999
+}
+
+.layadmin-user-login-body .layui-form-item {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.layadmin-user-login-icon {
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    width: 38px;
+    line-height: 36px;
+    text-align: center;
+    color: #d2d2d2
+}
+
+.layadmin-user-login-body .layui-form-item .layui-input {
+    padding-left: 38px
+}
+
+.layadmin-user-login-codeimg {
+    max-height: 34px;
+    width: 100%;
+    cursor: pointer;
+    box-sizing: border-box
+}
+
+.layadmin-user-login-other {
+    position: relative;
+    font-size: 0;
+    line-height: 38px;
+    padding-top: 20px
+}
+
+.layadmin-user-login-other>* {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    font-size: 14px
+}
+
+.layadmin-user-login-other .layui-icon {
+    position: relative;
+    top: 2px;
+    font-size: 26px
+}
+
+.layadmin-user-login-other a:hover {
+    opacity: .8
+}
+
+.layadmin-user-jump-change {
+    float: right
+}
+
+.layadmin-login-header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    line-height: 30px;
+    padding: 20px;
+    text-align: center;
+    box-sizing: border-box;
+}
+.layadmin-login-header .header-box{
+    width: 1000px;
+    height: 85px;
+    text-align: center;
+    margin: 0 auto;
+}
+.layadmin-login-header img{
+    height: 45px;
+    margin-right: 10px;
+}
+.layadmin-login-header p{
+    font-size: 30px;
+    font-weight: bold;
+    height: 45px;
+    line-height: 45px;
+}
+
+.layadmin-user-login-footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    line-height: 30px;
+    padding: 20px;
+    text-align: center;
+    box-sizing: border-box;
+    color: rgba(0,0,0,.5)
+}
+
+.layadmin-user-login-footer span {
+    padding: 0 5px
+}
+
+.layadmin-user-login-footer a {
+    padding: 0 5px;
+    color: rgba(0,0,0,.5)
+}
+
+.layadmin-user-login-footer a:hover {
+    color: rgba(0,0,0,1)
+}
+
+.layadmin-user-login-main[bgimg] {
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,.05)
+}
+
+.ladmin-user-login-theme {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center
+}
+
+.ladmin-user-login-theme ul {
+    display: inline-block;
+    padding: 5px;
+    background-color: #fff
+}
+
+.ladmin-user-login-theme ul li {
+    display: inline-block;
+    vertical-align: top;
+    width: 64px;
+    height: 43px;
+    cursor: pointer;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+    background-color: #f2f2f2
+}
+
+.ladmin-user-login-theme ul li:hover {
+    opacity: .9
+}
+.tc{
+    text-align: center;
+}
+.pa-box-error{
+    position: absolute;
+    bottom: 115px;
+    left: 20px;
+    color: #ff7171;
+    /*border: #ff4f54 solid 1px;*/
+    /*padding: 5px;*/
+    width: 86%;
+    line-height: 24px;
+}
+.pa-box-error i{
+    margin-right: 5px;
+    font-size: 20px;
+    margin-bottom: -3px;
+    float: left;
+}
+/*@media screen and (max-width:768px) {*/
+/*.layadmin-user-login {*/
+/*padding-top: 60px*/
+/*}*/
+
+/*.layadmin-user-login-main {*/
+/*width: 300px*/
+/*}*/
+
+/*.layadmin-user-login-box {*/
+/*padding: 10px*/
+/*}*/
+/*}*/
+
+.layadmin-user-display-show .login-bg{
+    background: url("../../static/images/bg-02.jpg") repeat center;
+    height: 100%;
+    min-height: 600px;
+    background-color: #0b67ee;
+}
+
+/*login-3*/
+#LAY-user-login.login-3, .layadmin-user-display-show.login-3{
+    background: url("../images/login-bg.jpg") repeat center;
+    background-size: cover;
+}
+.login-3 .login-box{
+    background-size: cover;
+    width: 798px;
+    height: 320px;
+    margin: 9% auto 0;
+    position: relative;
+    text-align: center;
+    background: rgba(255,255,255,1);
+    border-radius: 12px;
+    padding: 30px 0;
+}
+.login-3 .login-img{
+    margin-top: -120px;
+    height: 50px;
+}
+.login-3 .layadmin-user-login-main {
+    margin: 0;
+    border-radius: 0;
+    margin-top: 18px;
+    margin-right: 30px;
+}
+.login-3 .layadmin-user-login-main .layadmin-user-login-header{
+    padding:0 20px;
+}
+.login-3 .layadmin-user-login-main .layadmin-user-login-header h2{
+    font-size: 23px;
+    color: #000;
+    font-family: "寰蒋闆呴粦";
+    font-weight: 400;
+    text-align: left;
+
+}
+.login-3 .layadmin-user-login-box{
+    padding: 20px 20px 0;
+}
+.login-3 .layadmin-user-login-body .layui-form-item .layui-input{
+    border: #aaa solid 1px;
+    height: 34px;
+    line-height: 34px;
+    border-radius: 5px;
+    padding-left: 30px;
+}
+.login-3 .pa-box-error{
+    bottom: 79px;
+    text-align: left;
+    width: 68%;
+}
+.login-3 .layui-login-lay{
+    position: absolute;
+    top: -24px;
+    left: 0;
+    color: #333333;
+    font-size: 15px;
+}
+.login-3 .layui-btn.layui-btn-blue{
+    width: 330px;
+    background:rgba(77,170,166,1);
+    border-radius:4px;
+}
+/*.login-icon-01{*/
+    /*background: url("../images/login-ico-01.png") no-repeat 6px center;*/
+/*}*/
+.login-icon-02{
+    background: url("../images/login-ico-02.png") no-repeat 6px center;
+}
+.login-icon-03{
+    background: url("../images/login-ico-03.png") no-repeat 6px center;
+}
+
+input:-webkit-autofill{
+    -webkit-box-shadow:0 0 0px 1000px #fff inset;
+}
+.login-icon-01:before{
+    content: "";
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background: url("../images/login-ico-01.png") no-repeat 6px center;
+}

@@ -1,0 +1,169 @@
+/*
+ * Welcome to use the TableToBean Tools.
+ * 
+ * http://vipbooks.iteye.com
+ * http://blog.csdn.net/vipbooks
+ * http://www.cnblogs.com/vipbooks
+ *  
+ * Author:bianj
+ * Email:edinsker@163.com
+ * Version:3.0.0
+ */
+
+package com.kinghis.yyoauth.pojo;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Date;
+
+/** 
+* @Description: dict_dept
+* @Author: sl 
+* @Date: 2019-11-04 11:06:36
+*/
+@Table(name = "Dict_dept")
+@Setter
+@Getter
+public class Dict_dept implements java.io.Serializable {
+    /** 版本号 */
+    private static final long serialVersionUID = 348660892362780315L;
+    
+    /**  */
+    @Id
+    private String dept_code;
+    
+    /**  */
+    private String dept_name;
+    
+    /**  */
+    private String dept_code_big;
+    
+    /**  */
+    private String dept_count;
+    
+    /**  */
+    private Integer weave_bed;
+    
+    /**  */
+    private Integer dept_bed;
+    
+    /**  */
+    private Integer assist_bed;
+    
+    /**  */
+    private Integer watch_bed;
+    
+    /**  */
+    private String dept_loce;
+    
+    /**  */
+    private String fig_zy;
+    
+    /**  */
+    private String fig_mz;
+    
+    /**  */
+    private String fig_jz;
+    
+    /**  */
+    private String fig_gc;
+    
+    /**  */
+    private String fig_jc;
+    
+    /**  */
+    private String fig_yj;
+    
+    /**  */
+    private String fig_tj;
+    
+    /**  */
+    private String dept_py;
+    
+    /**  */
+    private String dept_five;
+    
+    /**  */
+    private Integer px_zy;
+    
+    /**  */
+    private Integer px_mz;
+    
+    /**  */
+    private Integer px_jz;
+    
+    /**  */
+    private Integer px_jzrz;
+    
+    /**  */
+    private Integer sort;
+    
+    /**  */
+    private String flag;
+    
+    /**  */
+    private String dept_man;
+    
+    /**  */
+    private String stop_flag;
+    
+    /**  */
+    private String hosp_code;
+    
+    /**  */
+    private String sjnf;
+    
+    /**  */
+    private Date create_date;
+    
+    /**  */
+    private Date stop_date;
+    
+    /**  */
+    private String technic_type;
+    
+    /**  */
+    private Integer px_yj;
+    
+    /**  */
+    private String use_new_page;
+    
+    /**  */
+    private String qc_doctor;
+    
+    /**  */
+    private String qc_nurse;
+    
+    /**  */
+    private String dept_net;
+    
+    /**  */
+    private String dept_net_clinic;
+    
+    /**  */
+    private String dept_net_em;
+    
+    /**  */
+    private String dept_net_watch;
+    
+    /**  */
+    private String dept_net_technic;
+    
+    /**  */
+    private String dept_net_physical;
+    
+    /**  */
+    private Integer px_tj;
+    
+    /**  */
+    private String dept_ej;
+    
+    /**  */
+    @Column(name = "dept_CFDA")
+    private String dept_CFDA;
+
+}

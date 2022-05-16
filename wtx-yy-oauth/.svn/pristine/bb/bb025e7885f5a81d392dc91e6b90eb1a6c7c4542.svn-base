@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<!-- /* 在html页面中引入thymeleaf命名空间 */-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <th:block th:replace="common/common:: common-base"></th:block>
+
+    <th:block th:replace="common/common:: common-add-css"></th:block>
+    <link rel="stylesheet" th:href="@{/layui/css/formSelects-v4.css}"/>
+    <style>
+        .xm-select-parent .xm-input{
+            height: 28px;
+        }
+        .xm-select-parent .xm-select-title{
+            min-height: 28px;
+        }
+        .xm-select-parent .xm-select{
+            min-height: 28px;
+        }
+        .xm-select-parent .xm-select-title div.xm-select-label>span{
+            line-height: 14px;
+            height: 14px;
+            padding: 1px 5px;
+        }
+        .xm-select-parent .xm-select-title div.xm-select-label>span i{
+            line-height: 14px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 10px;">
+    <div class="layui-row layui-col-space10 layui-form-item">
+        <!--<div class="layui-col-sm12">
+            <label class="layui-form-label"><em>*</em>所属省市县</label>
+            <div class="layui-input-block">
+                <select name="city" xm-select="select15_2" xm-select-radio="" lay-verify="required">
+                    <option value=" " >请选择</option>
+                </select>
+            </div>
+        </div>-->
+
+
+        <input type="hidden" name="orgCode" th:value="${obj.orgCode }"/>
+        <div class="layui-col-sm12">
+            <label class="layui-form-label"><em>*</em>机构编码</label>
+            <div class="layui-input-block">
+                <input th:if="${#strings.isEmpty(obj.orgCode)}" type="text" name="orgCode" th:value="${obj.orgCode }" lay-verify="required" autocomplete="off" class="layui-input" >
+                <input th:unless="${#strings.isEmpty(obj.orgCode)}" type="text" name="orgCode" th:value="${obj.orgCode }" readonly lay-verify="required" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-col-sm12">
+            <label class="layui-form-label"><em>*</em>机构名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="orgName" th:value="${obj.orgName }" lay-verify="required" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+
+        <div class="layui-col-sm12">
+            <label class="layui-form-label"><em>*</em>机构区域</label>
+            <div class="layui-input-block">
+                <select name="areaCode" xm-select="areaCode"  xm-select-radio="" >
+                    <option value="">请选择, 此处是联动多选</option>
+                </select>
+            </div>
+        </div>
+        <!--   <div class="layui-col-sm6">
+              <label class="layui-form-label"><em>*</em>行政级别</label>
+              <div class="layui-input-block">
+                  <select name="orgLevel" lay-verify="required" lay-filter="orgLevel-filter" lay-search>
+                      <option value="">请选择</option>
+                      <option value="1" th:selected="${obj.orgLevel == '1'}">村级</option>
+                      <option value="2" th:selected="${obj.orgLevel == '2'}">乡镇级</option>
+                      <option value="3" th:selected="${obj.orgLevel == '3'}">县级</option>
+                      <option value="4" th:selected="${obj.orgLevel == '4'}">市级</option>
+                      <option value="5" th:selected="${obj.orgLevel == '5'}">省级</option>
+                  </select>
+              </div>
+          </div>
+          <div class="layui-col-sm6">
+              <label class="layui-form-label">邮箱地址</label>
+              <div class="layui-input-block">
+                  <input type="text" name="email" th:value="${obj.email }" lay-verify="email"  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+
+          <div class="layui-col-sm6" >
+              <label class="layui-form-label">单位网址</label>
+              <div class="layui-input-block">
+                  <input type="text" name="orgWebsite" th:value="${obj.orgWebsite }"  autocomplete="off" class="layui-input" >
+              </div>
+          </div>
+
+          <div class="layui-col-sm6">
+              <label class="layui-form-label">联系电话</label>
+              <div class="layui-input-block">
+                  <input type="text" name="phoneNumber" th:value="${obj.phoneNumber}" lay-verify="phone" autocomplete="off" class="layui-input">
+              </div>
+          </div>
+
+          <div class="layui-col-sm6">
+              <label class="layui-form-label">有效状态</label>
+              <div class="layui-input-block">
+                  <select name="status" lay-filter="status-filter" lay-search>
+                      <option value="1" th:selected="${obj.status == '1'}">有效</option>
+                      <option value="0" th:selected="${obj.status == '0'}">无效</option>
+                  </select>
+              </div>
+          </div>
+
+          <div class="layui-col-sm6" >
+              <label class="layui-form-label">单位地址</label>
+              <div class="layui-input-block">
+                  <input type="text" name="orgWebsite" th:value="${obj.orgWebsite }"  autocomplete="off" class="layui-input" >
+              </div>
+          </div>-->
+
+
+
+    </div>
+    <div class="layui-form-item layui-layer-btn layui-layer-btn-bottom">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-sm layui-btn-normal" lay-submit="" lay-filter="sub">确定</button>
+            <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary" onclick="wtx.closeWin()">取消</button>
+        </div>
+    </div>
+
+</div>
+
+<th:block th:replace="common/common:: common-js"></th:block>
+<script th:src="@{/layui/formSelects-v4.js}"></script>
+
+<!--js中取值时 注意加上 th:inline="javascript"-->
+<script th:inline="javascript">
+    debugger;
+    var orgCode = [[${obj.orgCode}]];
+    var area_code = [[${obj.areaCode}]];
+    var code = [[${obj1}]];
+    layui.use(['form'], function(){
+
+        var form = layui.form;
+        var formSelects = layui.formSelects;
+        /*//自定义验证规则
+        form.verify({
+            phone: function (value) {
+                var reg = /^1[3|4|5|8|9][0-9]\d{8}$/;
+                if (!reg.test(value)) {
+                    return '请输入正确的手机号码';
+                }
+            }
+        });*/
+
+
+
+
+   /*   wtx.get(_basePath + 'data/org/listEreaSelect', "", function(d){
+            layui.formSelects.data('areaCode', 'local', {
+                arr:d,
+                linkage: true
+            });
+
+        });*/
+        var index = layer.load();
+
+        $.ajax({
+            url : _basePath + 'data/org/listEreaSelect',
+            type:'get',//默认以get提交，以get提交如果是中文后台会出现乱码
+            async: false,
+            success : function(data) {
+                console.log(data.list);
+                layui.formSelects.data('areaCode' , 'local', {
+                    arr: data.list,
+                    linkage: true
+                });
+
+            }
+        })
+        layer.close(index);
+        //local模式 本地数据
+
+        var keysS = [];
+        if(area_code){
+            keysS.push(area_code);
+            formSelects.value('areaCode', keysS);
+        }
+
+        var keysS = [];
+        if(area_code){
+            keysS.push(area_code);
+            formSelects.value('areaCode', keysS);
+        }
+       // formSelects.btns('areaCode', [area_code]);
+
+
+        //监听提交
+        form.on('submit(sub)', function(data){
+            var url = '';
+            if (orgCode == null || orgCode == ''){
+                url = _basePath + 'data/org/add'
+
+            } else {
+                url = _basePath + 'data/org/update'
+            }
+            /*var diqu = layui.formSelects.value('select15_2');
+
+            var arr = diqu[0].name.split("/");
+            var code = diqu[0].value.split("/");
+            if(arr)
+                {
+            data.field.provinceName = arr[0];
+            data.field.cityName = arr[1];
+            data.field.countyName = arr[2];}
+            if(code)
+                {
+                data.field.provinceCode = code[0];
+                data.field.cityCode = code[1];
+                data.field.countyCode = code[2];}
+
+*/
+            wtx.post(url, data.field, function(data){
+                wtx.alert("保存成功！", function(){
+                    wtx.closeWin();
+                })
+            });
+
+
+            return false;//必须要有，否则不会执行layer.alert
+        });
+
+
+
+
+
+    });
+    /*layui.formSelects.data('select15_2', 'server', {
+        url: 'http://yapi.demo.qunar.com/mock/9813/layui/citys',
+        linkage: true,
+        linkageWidth: 130,
+        success: function (id, url, val, result) {
+            if(area!=""){
+                layui.formSelects.value('select15_2', [area]);
+            }
+        },
+    });*/
+
+
+
+
+
+</script>
+</body>
+</html>

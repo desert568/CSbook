@@ -1,0 +1,12 @@
+package com.kinghis.yyoauth.dao;
+
+import com.kinghis.yyoauth.common.WtxBaseMapper;
+import com.kinghis.yyoauth.pojo.Dict_dept;
+
+/**
+ * @DESC:
+ * @Author: cp
+ * @Date: 2019/11/4 15:57
+ */
+public interface DictDeptMapper extends WtxBaseMapper<Dict_dept> {
+}
